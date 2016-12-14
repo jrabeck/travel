@@ -10,6 +10,9 @@ class FollowsController < ApplicationController
   end
 
   def create
+    @follow = Follow.new(follower_id: current_user.id, following_id: params[:id])
+    @follow.save
+    redirect_to "/users/#{params[:id]}"
   end
 
   def edit

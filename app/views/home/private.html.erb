@@ -16,3 +16,5 @@
   <% current_user.followers.each do |follower|%>
   <%= link_to "#{follower.first_name}", "users/#{follower.id}" %>
   <% end %>
+
+ 	<%= link_to "All Users", '/users/index' %>

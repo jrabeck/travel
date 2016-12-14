@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get "/trips/:id/stop/new", to: 'stops#new'
   post '/trips/:id/stops', to: "stops#create"
   post '/trips', to: "trips#create"
-
+  get '/users/index', to: "users#index"
   get '/users/:id', to: "users#show"
+  get "/users/follow/:id", to: "follows#create"
+
+
 end
