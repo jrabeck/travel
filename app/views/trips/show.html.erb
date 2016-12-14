@@ -1,1 +1,11 @@
-create.html.erb
+
+
+
+<h1> <%= @trip.name %> </h1>
+<% @stops.each do |stop|%>
+<%= link_to stop.name, "/stops/#{stop.id}" %>
+<br>
+<% end %>
+
+<h3> <%= link_to "Add a Stop!", "/trips/#{@trip.id}/stop/new" %> </h3>
+

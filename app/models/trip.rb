@@ -4,4 +4,5 @@ class Trip < ApplicationRecord
 	has_many :stops
 	has_many :comments
 	has_many :images
+	validates :name, presence: true 
 end

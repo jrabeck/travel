@@ -8,9 +8,9 @@
 
 
 user = User.create ([
-	{first_name: "Jake", last_name: "Rabeck", email: "JakeRabeck@gmail.com"},
-	{first_name: "Bernie", last_name: "Sanders", email: "BernieSanders@love.gov"},
-	{first_name: "John", last_name: "Lennon", email: "JohnLennon@AppleCorp.com"},
+	{first_name: "Jake", last_name: "Rabeck", email: "jakerabeck@gmail.com", password: "Jake", password_confirmation: "Jake"},
+	{first_name: "Bernie", last_name: "Sanders", email: "berniesanders@love.gov", password: "Bernie", password_confirmation: "Bernie"},
+	{first_name: "John", last_name: "Lennon", email: "johnlennon@AppleCorp.com", password: "John", password_confirmation: "John"},
 	])
 
 trips = Trip.create ([
