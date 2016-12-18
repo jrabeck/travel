@@ -1,7 +1,9 @@
 <% @users.each do |user| %> 
 <h4><%= link_to "#{user.first_name}", "/users/#{user.id}" %></h4>
-
-<h5><%= link_to "Follow", "/users/follow/#{user.id}" %></h5>
-
+	<% if current_user.following.pluck(:id).include?(user.id) %>
+		<h5><%= link_to "UnFollow", "/users/follow/#{user.id}", method: :delete %></h5>
+	<% else %>
+		<h5><%= link_to "Follow", "/users/follow/#{user.id}" %></h5>
+	<% end %>
 <br>
 <% end %>

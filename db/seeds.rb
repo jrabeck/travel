@@ -20,7 +20,7 @@ trips = Trip.create ([
 
 stops = Stop.create ([
 	{name: "The White House", address: "1600 Pennsylvania Avenue", trip_id: 1, order: 1},
-	{name: "Abbey Road Studios", address: "3 Abbey Road", trip_id: 2, order: 1},
+	{name: "Abbey Road Studios", address: "3 Abbey Rd, London NW8 9AY, UK", trip_id: 2, order: 1},
 	{name: "Apple Corp", address: "95 Wigmore Street", trip_id: 2, order: 2}
 	])
 

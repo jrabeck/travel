@@ -13,8 +13,20 @@
   <br>
   </h3>
   <% end %>
+  <br>
+
+  <h2> You are following: </h2>
+  <% current_user.following.each do |follower|%>
+  <%= link_to "#{follower.first_name}", "users/#{follower.id}" %>
+  <br>
+  <% end %>
+
+  <h2> You are followed by: </h2>
   <% current_user.followers.each do |follower|%>
   <%= link_to "#{follower.first_name}", "users/#{follower.id}" %>
   <% end %>
 
+  <br>
+  ---------------
+  <br>
  	<%= link_to "All Users", '/users/index' %>

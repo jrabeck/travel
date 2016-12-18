@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
+  get 'stops/index', to: "stops#index"
   get '/stops/:id', to: 'stops#show'
   get "/trips/:id/stop/new", to: 'stops#new'
   post '/trips/:id/stops', to: "stops#create"
@@ -21,6 +22,9 @@ Rails.application.routes.draw do
   get '/users/index', to: "users#index"
   get '/users/:id', to: "users#show"
   get "/users/follow/:id", to: "follows#create"
+  delete "users/follow/:id", to: "follows#destroy"
+
+
 
 
 end
