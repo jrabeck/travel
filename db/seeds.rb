@@ -8,14 +8,15 @@
 
 
 user = User.create ([
-	{first_name: "Jake", last_name: "Rabeck", email: "jakerabeck@gmail.com", password: "Jake", password_confirmation: "Jake"},
+	{first_name: "Jake", last_name: "Rabeck", email: "jakerabeck@gmail.com", password: "Jakeee", password_confirmation: "Jakeee"},
 	{first_name: "Bernie", last_name: "Sanders", email: "berniesanders@love.gov", password: "Bernie", password_confirmation: "Bernie"},
-	{first_name: "John", last_name: "Lennon", email: "johnlennon@AppleCorp.com", password: "John", password_confirmation: "John"},
+	{first_name: "John", last_name: "Lennon", email: "johnlennon@AppleCorp.com", password: "Johnnn", password_confirmation: "Johnnn"},
 	])
 
 trips = Trip.create ([
 	{name: "Mr. Rabeck, and Sen. Sanders Go to Washington"},
-	{name: "Jake and John Jam at Abbey Road Studios"}
+	{name: "Jake and John Jam at Abbey Road Studios"},
+	{name: "Testtrip"},
 	])
 
 stops = Stop.create ([
@@ -26,6 +27,7 @@ stops = Stop.create ([
 
 follows = Follow.create ([
 	{follower_id: 1, following_id: 2},
+	{follower_id: 1, following_id: 3},
 	{follower_id: 2, following_id: 1},
 	{follower_id: 3, following_id: 2}
 	])
@@ -39,6 +41,9 @@ usertrip = Usertrip.create ([
 	{user_id: 1, trip_id: 1},
 	{user_id: 2, trip_id: 1},
 	{user_id: 1, trip_id: 2},
-	{user_id: 3, trip_id: 2}
+	{user_id: 3, trip_id: 2},
+	{user_id: 1, trip_id: 3},
+	{user_id: 2, trip_id: 3},
+	{user_id: 3, trip_id: 3},
 	])
 

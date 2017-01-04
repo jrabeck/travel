@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+ 
+   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  
+   # devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout'}
+
+
+  # devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get '/', to: 'home#home'
@@ -6,13 +13,13 @@ Rails.application.routes.draw do
   get '/trips/new', to: 'trips#new'
   get '/trips/:id', to: 'trips#show'
 
-  post '/login', to: 'sessions#create'
 
-  get '/signup', to: 'users#new'
-  post '/users', to: 'users#create'
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy'
+  # post '/login', to: 'sessions#create'
+  # get '/signup', to: 'users#new'
+  # post '/users', to: 'users#create'
+  # get '/login', to: 'sessions#new'
+  # post '/login', to: 'sessions#create'
+  # get '/logout', to: 'sessions#destroy'
 
   get 'stops/index', to: "stops#index"
   get '/stops/:id', to: 'stops#show'
@@ -23,7 +30,6 @@ Rails.application.routes.draw do
   get '/users/:id', to: "users#show"
   get "/users/follow/:id", to: "follows#create"
   delete "users/follow/:id", to: "follows#destroy"
-
 
 
 

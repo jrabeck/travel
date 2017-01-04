@@ -1,7 +1,6 @@
 
-
-
 <h1> <%= @trip.name %> </h1>
+
 <% @stops.each do |stop|%>
 <%= link_to stop.name, "/stops/#{stop.id}" %>
 <br>
@@ -9,17 +8,5 @@
 
 <h3> <%= link_to "Add a Stop!", "/trips/#{@trip.id}/stop/new" %> </h3>
 
-
-<header><h1 class="display-4">API +Stop</h1></header>
-
 <%= link_to 'Add place', "/trips/#{@trip.id}/stop/new", class: 'btn btn-primary btn-lg' %>
-
-<div class="card">
-  <div class="card-block">
-    <ul>
-<!--  -->
-    </ul>
-  </div>
-</div>
-
 
