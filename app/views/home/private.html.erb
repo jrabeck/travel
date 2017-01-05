@@ -175,11 +175,11 @@
               <!-- FEED ITEM -->
               <div class="col-xs-12">
                 <div class="media blogPostListItem">
-                  <a class="media-left" href="#">
+                  <a class="media-left" href="/trips/<%= trip.id%>">
                     <img class="media-object" src="img/blog/blog-02.png" alt="blog-image">
                   </a>
                   <div class="media-body">
-                    <h4><a  href="#" class="blogTitle"><%= trip.name %>
+                    <h4><a  href="/trips/<%= trip.id%>" class="blogTitle"><%= trip.name %>
                       </a></h4>
                     <ul class="list-inline blogInfo">
                       <li><i class="fa fa-user" aria-hidden="true"></i><a href="#">
@@ -204,11 +204,11 @@
                  
                 <div class="col-xs-12">
                   <div class="media blogPostListItem">
-                    <a class="media-left" href="#">
+                    <a class="media-left" href="/stops/<%="#{stop.id}"%>">
                       <img class="media-object" src="img/blog/blog-02.png" alt="blog-image">
                     </a>
                     <div class="media-body">
-                      <h4><a  href="#" class="blogTitle"><%= stop.name %></a></h4>
+                      <h4><a  href="/stops/<%="#{stop.id}"%>" class="blogTitle"><%= stop.name %></a></h4>
                       <ul class="list-inline blogInfo">
                         <li><i class="fa fa-user" aria-hidden="true"></i><a href="#"> 
                         <% trip.users.each do |user| %>

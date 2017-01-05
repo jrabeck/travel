@@ -23,13 +23,20 @@ Rails.application.routes.draw do
 
   get 'stops/index', to: "stops#index"
   get '/stops/:id', to: 'stops#show'
-  get "/trips/:id/stop/new", to: 'stops#new'
+  get '/trips/:id/stop/new', to: 'stops#new'
   post '/trips/:id/stops', to: "stops#create"
   post '/trips', to: "trips#create"
   get '/users/index', to: "users#index"
   get '/users/:id', to: "users#show"
   get "/users/follow/:id", to: "follows#create"
   delete "users/follow/:id", to: "follows#destroy"
+
+  get '/trip/:id/edit', to: "trips#edit"
+  #update (same as create except saying updated)
+  patch '/trips/:id', to: "trips#update"
+  
+  get"/testfeed", to: "users#testfeed"
+
 
 
 

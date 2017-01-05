@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @trips = current_user.trips
   end
 
   def show
@@ -9,6 +10,9 @@ class UsersController < ApplicationController
   end
 
   def new  
+  end
+
+  def testfeed
   end
 
   def create
@@ -29,6 +33,11 @@ class UsersController < ApplicationController
   end
 
   def edit
+  end
+
+  def testfeed
+  @activities = PublicActivity::Activity.all
+  @trips = Trip.all
   end
 
   def update

@@ -1,0 +1,24 @@
+<div class="col-sm-12">
+  <%= yield %>
+</div>
+
+<% render 'shared/activities' %>
+
+ <br>
+ <br>
+
+ 
+ <% counter = 0 %>
+ <% @activities.where(trackable_type: "Trip").each do |trip| %>
+ <% id = trip.trackable_id %>
+
+ <br>
+ Trip name: <%= @trips.find_by(id: id).name %>
+ <br>
+ Trip desc: <%= @trips.find_by(id: id).description %>
+ <br>
+ Action: <%= trip.key %>
+ <br>
+ 
+ <% counter = counter + 1 %>
+ <% end %>

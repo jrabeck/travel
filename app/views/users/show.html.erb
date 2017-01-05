@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gallery Grid View - Star Travel</title>
+  <title><%= @user.first_name %>'s Page</title>
   
   <!-- PLUGINS CSS STYLE -->
   <link href="plugins/jquery-ui/jquery-ui.css" rel="stylesheet">
@@ -90,13 +90,13 @@
 		          <div class="col-sm-3 isotopeSelector trip<%=trip.id%>">
 		            <article class="">
 		              <figure>
-		                <img src="img/home/packages/packages-1.jpg" alt="">
+		                <img src="/img/home/packages/packages-1.jpg" alt="">
 		                <h4><%=stop.name%></h4>
 		                <div class="overlay-background">
 		                  <div class="inner"></div>
 		                </div>
 		                <div class="overlay">
-		                  <a class="fancybox-pop" rel="portfolio-1" href="img/home/packages/packages-1.jpg">
+		                  <a class="fancybox-pop" rel="portfolio-1" href="/img/home/packages/packages-1.jpg">
 		                    <span class="overlayInfo">
 		                      <h5>from <span>$1000</span></h5>
 		                      <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>

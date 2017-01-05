@@ -7,6 +7,7 @@ class StopsController < ApplicationController
 
   def show
     @stop = Stop.find_by(id: params[:id])
+    @trip = Trip.find_by(id: [@stop.trip_id])
     @near = Stop.near('Arlington, VA, US', 100)
     @near2 = @stop.nearbys(30)
   end
