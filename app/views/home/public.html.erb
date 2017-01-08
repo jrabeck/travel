@@ -13,8 +13,9 @@
                   data-start="1000"
                   data-easing="Back.easeInOut"
                   data-endspeed="300">
-                  Discover The Most Amazing
-                  <span>Travel Template</span>
+                  <span>Tr@\/e|ing - </span>it leaves you speechless, then turns you into a storyteller.” – Ibn Battuta
+                  <br>
+                  <br>
                 </div>
                 <div class="tp-caption rs-caption-2 sft"
                   data-hoffset="0"
@@ -38,6 +39,32 @@
                   data-endeasing="Power1.easeIn"
                   data-captionhidden="off">
                   <span class="page-scroll"><a target="_blank" href="/users/auth/facebook" class="FBLI">    Sign in with Facebook</a></span>
+                  
+                    <%= form_tag '/users/auth/facebook', method: :post do %>
+
+                    <div>
+                    <%= label_tag :first_name %>
+                    <%= text_field_tag :first_name %>
+                    </div>
+
+                    <div>
+                    <%= label_tag :last_name %>
+                    <%= text_field_tag :last_name %>
+                    </div>
+
+                    <div>
+                    <%= label_tag :password %>
+                    <%= password_field_tag :password %>
+                    </div>
+
+                    <div>
+                    <%= label_tag :password_confirmation %>
+                    <%= password_field_tag :password_confirmation %>
+                    </div>
+
+                    <%= submit_tag "Sign up!" %>
+                    <% end %>
+                  <span class="page-scroll"><a target="_blank" href="/users/auth/facebook" class="FBLI">Login</a></span>
 
                 </div>
               </div>

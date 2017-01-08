@@ -117,7 +117,7 @@
                     <div class="maskingInfo">
                       <h4><%=stop.name%></h4>
                       <p>Lorem Ipsum</p>
-                      <a href="#" class="btn buttonTransparent">see more!</a>
+                      <a href="/stops/<%=stop.id%>" class="btn buttonTransparent">see more!</a>
                     </div>
                   </div>
                 </div>
@@ -134,12 +134,12 @@
                 <h3>Comments (4)</h3>
                 <div class="media">
                   <a class="media-left" href="#">
-                    <img class="media-object" src="img/blog/comments-01.png" alt="Image">
+                    <img class="media-object" src="/img/blog/comments-01.png" alt="Image">
                   </a>
                   <div class="media-body">
                     <h4 class="media-heading">Jessica Brown </h4>
                     <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                    <p>First comment First comment First comment First comment First comment First comment First comment First comment First comment First comment First comment First comment First comment </p>
                     <button class="btn btn-link" type="button">Reply</button>
                     <div class="media">
                       <a class="media-left" href="#">
@@ -175,6 +175,18 @@
                   </div>
                 </div>
               </div>
+              <h1>Leave a comment!</h1>
+              <%= form_tag "/trips/comments", method: :post do  %>
+                <div>
+                  <%= label_tag :comment %>
+                  <%= text_field_tag :comment %>
+                </div>
+                <%= hidden_field_tag "user_id", current_user.id %>
+                <%= hidden_field_tag "trip_id",
+                @trip.id %>
+                <div>
+                <%= submit_tag "Submit" %>
+              <% end %>
               <% if current_user %>
               <form action="" method="POST" role="form" class="commentsForm">
                 <h3>Leave A Comments</h3>

@@ -86,9 +86,7 @@
                   <li role="presentation">
                     <a href="#popular" aria-controls="popular" role="tab" data-toggle="tab">Following</a>
                   </li>
-                  <li role="presentation">
-                    <a href="#new" aria-controls="new" role="tab" data-toggle="tab">New</a>
-                  </li>
+                
                 </ul>
 
                 <!-- Tab panes -->
@@ -165,6 +163,12 @@
               </div>
             </aside>
           </div>
+
+          <% if current_user.traveling %>
+            <h2> How's your trip going?? </h2>
+            <br>
+          <% end %> 
+
           <div class="col-sm-9 col-xs-12">
             <div class="row">    
 
@@ -172,6 +176,8 @@
                 <% follower.trips.each do |trip| %>
                        
             
+
+
               <!-- FEED ITEM -->
               <div class="col-xs-12">
                 <div class="media blogPostListItem">

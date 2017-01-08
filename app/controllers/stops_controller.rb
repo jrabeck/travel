@@ -10,6 +10,8 @@ class StopsController < ApplicationController
     @trip = Trip.find_by(id: [@stop.trip_id])
     @near = Stop.near('Arlington, VA, US', 100)
     @near2 = @stop.nearbys(30)
+    @images = Image.where(stop_id: params[:id])
+    @images_first = @images.first
   end
 
   def create

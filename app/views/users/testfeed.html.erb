@@ -8,17 +8,31 @@
  <br>
 
  
+ <% activities_array = Hash.new %>
  <% counter = 0 %>
- <% @activities.where(trackable_type: "Trip").each do |trip| %>
- <% id = trip.trackable_id %>
 
- <br>
- Trip name: <%= @trips.find_by(id: id).name %>
- <br>
- Trip desc: <%= @trips.find_by(id: id).description %>
- <br>
- Action: <%= trip.key %>
- <br>
- 
- <% counter = counter + 1 %>
- <% end %>
+	 <% @activities.where(trackable_type: "Trip").each do |trip| %>
+		 <% id = trip.trackable_id %>
+		 <% type = trip.trackable_type %>
+		 <% activities_array["#{counter}"] = @trips.find_by(id: id).name %>
+		 <%counter = counter + 1 %>
+	 <% end %>
+		 		<% activities_array.each do |activity| %>
+			 		<% if activity[counter] != activity[counter.to_i - 1] %> 
+			 		
+			 		<%= activity[counter] %>
+					 <br>
+					 Trip name: <%= @trips.find_by(id: id).name %>
+					 <br>
+					 Trip desc: <%= @trips.find_by(id: id).description %>
+					 <br>
+					 Action: <%= trip.key %>
+					 <br>
+					 <% counter = counter + 1 %>
+					<% end %>
+		 		<% end %>
+		 
+		
+	 
+<%= activities_array %>
+

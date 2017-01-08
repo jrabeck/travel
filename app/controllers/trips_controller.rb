@@ -24,6 +24,7 @@ end
   
 
   def show
+    
     @stops = Trip.find_by(id: params[:id]).stops
     @trip = Trip.find_by(id: params[:id])
   end

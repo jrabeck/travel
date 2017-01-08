@@ -1,0 +1,2 @@
+class StopImagesController < ApplicationController
+end

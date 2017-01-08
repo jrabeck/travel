@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170105082425) do
+ActiveRecord::Schema.define(version: 20170107100410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,8 +48,19 @@ ActiveRecord::Schema.define(version: 20170105082425) do
 
   create_table "images", force: :cascade do |t|
     t.string   "url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "prof_pic_id"
+    t.integer  "user_pic_id"
+    t.integer  "stop_id"
+    t.integer  "trip_id"
+  end
+
+  create_table "stop_images", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "stop_id"
+    t.integer  "image_id"
   end
 
   create_table "stops", force: :cascade do |t|
@@ -61,10 +72,11 @@ ActiveRecord::Schema.define(version: 20170105082425) do
     t.float    "longitude"
     t.float    "latitude"
     t.integer  "order"
-    t.string   "description"
     t.string   "zip"
     t.string   "state"
     t.string   "city"
+    t.text     "description"
+    t.string   "tagline"
   end
 
   create_table "trip_comments", force: :cascade do |t|
@@ -79,9 +91,10 @@ ActiveRecord::Schema.define(version: 20170105082425) do
     t.string   "name"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.string   "description"
     t.date     "start_date"
     t.date     "end_date"
+    t.text     "description"
+    t.string   "tagline"
   end
 
   create_table "users", force: :cascade do |t|
