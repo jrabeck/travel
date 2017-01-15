@@ -198,6 +198,7 @@ body.bodyColor .navbar-fixed-top {
   text-align: center;
   font-size: 14px;
   padding: 9px 0;
+
 }
 @media (min-width: 480px) {
   .btn {
@@ -297,6 +298,7 @@ a:focus {
   color: #969696;
   text-transform: uppercase;
   outline: 0;
+
 }
 .buttonTransparent:hover, .paginationCenter .pagination li:first-child a:hover, .paginationCenter .pagination li:last-child a:hover, .isotopeFilters ul.filter > li a:hover {
   background-color: #ff891e;
@@ -1242,7 +1244,7 @@ a:focus {
   padding: 60px 0;
 }
 .buttonArea.galleryBtnArea .buttonTransparent, .buttonArea.galleryBtnArea .paginationCenter .pagination li:first-child a, .paginationCenter .pagination li:first-child .buttonArea.galleryBtnArea a, .buttonArea.galleryBtnArea .paginationCenter .pagination li:last-child a, .paginationCenter .pagination li:last-child .buttonArea.galleryBtnArea a, .buttonArea.galleryBtnArea .isotopeFilters ul.filter > li a, .isotopeFilters ul.filter > li .buttonArea.galleryBtnArea a {
-  background-color: whitesmoke;
+  background-color: #ffffff;
   border-color: whitesmoke;
   color: #222222;
   padding: 0 30px;
@@ -2372,7 +2374,6 @@ header {
 .mainContentSection, .whiteSection, .lightSection {
   width: 100%;
   padding: 100px 0 70px 0;
-  background-color: #ffffff;
   display: block;
 }
 
@@ -3838,7 +3839,7 @@ header {
 }
 @media (min-width: 1200px) {
   .tp-caption.rs-caption-2 {
-    font-size: 400px !important;
+    font-size: 14px !important;
     line-height: 21px !important;
   }
 }
@@ -4811,7 +4812,7 @@ header {
 .blogSidebar .panel {
   border-color: #eeeeee;
   box-shadow: none;
-  background-color: whitesmoke;
+  background-color: #ffffff;
   padding-bottom: 15px;
 }
 .blogSidebar .panel .panel-heading {
@@ -4897,8 +4898,8 @@ header {
   color: #222222;
 }
 .tabArea .nav-tabs > li.active a {
-  border-color: #eeeeee;
-  background-color: whitesmoke;
+  border-color: #ffffff;
+  background-color: #ffffff;
   color: #222222;
   border-bottom-color: whitesmoke;
 }
@@ -4909,7 +4910,7 @@ header {
   padding-right: 0;
 }
 .tabArea .tab-content {
-  background-color: whitesmoke;
+  background-color: #ffffff;
   border: 1px solid #eeeeee;
   border-top: none;
   -webkit-border-radius: 4px;

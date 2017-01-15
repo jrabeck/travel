@@ -1,3 +1,163 @@
 body {  
 	background-image: url(subtle_grunge.png);
 }
+
+.editButton {
+  height: 20px;
+  width: 20px;
+  margin-left: 1px;
+}
+
+.width {
+	width: 100% !important;
+}
+
+img.editButton {
+   display: none
+}
+
+h2.editButtonText:hover img.editButton{
+   display: block;
+}
+
+.relatedItem {
+		height: 185px !important;
+		width: 200px !important;
+		text-align: center;
+	img {
+	height: 100%;
+	width: auto;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	}
+}
+
+.relatedItem .maskingInfo h4 {
+  margin: 40px 0 15px 0 !important;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+ }
+
+ .user_pic_small {
+ 	height: 200px;
+ 	width: 200px;
+ }
+
+ .timersize {
+ 	height: 25% !important;
+ 	width: 75% !important''
+ }
+
+.image-row {
+    white-space: nowrap;
+
+}
+
+.inline {
+	display: inline;
+}
+
+ .max-carousel {
+
+ 	max-height: 563px !important; 
+ 	min-height: 563px !important;
+ 	text-align: center !important;
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	margin-top: auto !important;
+ 	vertical-align: center !important;
+ 	max-height: 100%;  
+
+
+ }
+
+.carousel_align {
+	 vertical-align: middle;
+}
+
+.container2 
+
+
+.carousel_vertical_center {
+
+    vertical-align: middle;
+}
+
+.vertical_center {
+
+       #position: relative;
+    #top: -50%;
+    margin: 0 auto;
+    width: 100%;
+    border: 1px solid black;
+}
+
+ .thumbnail {
+ 	height: 75px;
+ 	width: 125px;
+ }
+
+.cover {
+	 background-size: cover;
+}
+
+.centered {
+	text-align: center;
+}
+
+.leave_comment_pic {
+	height: 61px;
+	width: 61px;
+}
+
+.comment_pic {
+	height: 75px;
+	width: 75px;
+}
+
+.home_panel {
+	border-radius: 35px;
+}
+
+
+
+
+// Landing page public CSS
+
+#landing_wrap {
+
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+
+	background: url(/img/home/slider/slider-01.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+
+
+}
+
+#landing_text {
+	align-self: center;
+	width: 55%;
+	h1 {color: #ffffff;}
+	h2 {color: #ffffff;}
+}
+
+
+.thumb {
+	// width: 125px !important;
+	height: 75px !important;
+	width: auto;
+
+}
+
+
+

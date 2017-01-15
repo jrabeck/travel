@@ -10,6 +10,7 @@ class ImagesController < ApplicationController
   end
 
   def create
+    image.create(archived: false)
   end
 
   def edit

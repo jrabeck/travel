@@ -12,15 +12,23 @@ class UsersController < ApplicationController
   def new  
   end
 
-  def testfeed
+  def traveling
+    if current_user.traveling == false
+      current_user.traveling = true
+    elsif current_user.traveling == true
+      current_user.traveling = false
+    end
+    redirect_to "/"
   end
+
 
   def create
     user = User.new(
       name: params[:name],
       email: params[:email].downcase,
       password: params[:password],
-      password_confirmation: params[:password_confirmation]
+      password_confirmation: params[:password_confirmation],
+      traveling: false 
     )
     if user.save
       session[:user_id] = user.id
@@ -36,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def testfeed
-  @activities = PublicActivity::Activity.all
+  @activities = PublicActivity::Activity.where(trackable_type: ["Trip", "Stop"])
   @trips = Trip.all
   end
 

@@ -6,33 +6,86 @@
 
  <br>
  <br>
+<br>
+
+  <br>
+ <br>
+<br>
+
+  <br>
+ <br>
+<br>
 
  
- <% activities_array = Hash.new %>
- <% counter = 0 %>
+ <%# activities_array = Hash.new %>
+ <%# counter = 0 %>
 
-	 <% @activities.where(trackable_type: "Trip").each do |trip| %>
-		 <% id = trip.trackable_id %>
-		 <% type = trip.trackable_type %>
-		 <% activities_array["#{counter}"] = @trips.find_by(id: id).name %>
-		 <%counter = counter + 1 %>
-	 <% end %>
-		 		<% activities_array.each do |activity| %>
-			 		<% if activity[counter] != activity[counter.to_i - 1] %> 
-			 		
-			 		<%= activity[counter] %>
+	<% @activities.each do |activity| %>
+			 <% id = activity.trackable_id %>
+			 <%# puts id %>
+			 <% type = activity.trackable_type %>
+
+		<% if (activity.key == "trip.update") %>
+
+		 	<% activity_match = (PublicActivity::Activity.find_by(trackable_id: activity.trackable_id, key: "trip.create")) %>
+		 	<% if activity.created_at - activity_match.created_at > 1.hour %>
+		 <%# activities_array["#{counter}"] = @trips.find_by(id: id).name %>
+		 <%#counter = counter + 1 %>
+	 <%# end %>
+		 		<%# activities_array.each do |activity| %>
+			 		<%# if activity[counter] != activity[counter.to_i - 1] %>			
+			 		<%#= activity[counter] %>
 					 <br>
-					 Trip name: <%= @trips.find_by(id: id).name %>
+					 Trip name: <%= Trip.find_by(id: id).name %>
 					 <br>
-					 Trip desc: <%= @trips.find_by(id: id).description %>
+					 Trip desc: <%= Trip.find_by(id: id).description %>
 					 <br>
-					 Action: <%= trip.key %>
+					 Action: <%= activity.key %>
 					 <br>
-					 <% counter = counter + 1 %>
-					<% end %>
-		 		<% end %>
+					 <%= activity.inspect %>
+					 <%# counter = counter + 1 %>
+					<%# end %>
+			<% end %>
+
+		<% elsif (activity.key == "trip.create") %>
+					 <br>
+					 Trip name: <%= Trip.find_by(id: id).name %>
+					 <br>
+					 Trip desc: <%= Trip.find_by(id: id).description %>
+					 <br>
+					 Action: <%= activity.key %>
+					 <br>
+
+		<% elsif (activity.key == "stop.update") %>
+			<% activity_match = (PublicActivity::Activity.find_by(trackable_id: activity.trackable_id, key: "stop.create")) %>
+		 	<% if activity.created_at - activity_match.created_at > 1.hour %>
+					 <br>
+					 Stop name: <%= Stop.find_by(id: id).name %>
+					 <br>
+					 Stop desc: <%= Stop.find_by(id: id).description %>
+					 <br>
+					 Action: <%= activity.key %>
+					 <br>
+					 <%= activity.inspect %>
+			<% end %>
+
+
+
+		<% elsif (activity.key == "stop.create") %>
+
+					 <br>
+					 Stop name: <%= Stop.find_by(id: id).name %>
+					 <br>
+					 Stop desc: <%= Stop.find_by(id: id).description %>
+					 <br>
+					 Action: <%= activity.key %>
+					 <br>
+
+				
+		<% end %>
+	<% end %>
 		 
 		
 	 
-<%= activities_array %>
+<%#= activities_array %>
 

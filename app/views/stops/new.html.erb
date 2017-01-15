@@ -1,20 +1,132 @@
-<h1>Create a Stop!</h1>
-<%= form_tag "/trips/#{params[:id]}/stops", method: :post do  %>
-  <div>
-    <%= label_tag :name %>
-    <%= text_field_tag :name %>
+
+<head>
+
+  <!-- SITE TITTLE -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add a Stop</title>
+  
+  
+</head>
+
+<body>
+  <div class="main-wrapper">
+
+    
+    <!-- PAGE TITLE -->
+    <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg7.jpg);">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="titleTable">
+              <div class="titleTableInner">
+                <div class="pageTitleInfo">
+                  <h1>Add a Stop!</h1>
+                  <div class="under-border"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- WHITE SECTION FILTER-->
+    <section class="mainContentSection">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 col-sm-push-8 col-xs-12">
+
+          </div>
+          <div class="col-sm-8 col-sm-pull-4 col-xs-12">
+            <div class="infoTitle">
+            </div>
+
+            <div class="bookingForm">
+             <%= form_tag "/trips/#{params[:id]}/stops", method: :post do  %>
+              <!-- <form action="/trips" method="POST" role="form" class="form"> -->
+              <div class="row">
+               <div class="form-group col-sm-6 col-xs-12">
+                <%= form_tag "/trips/#{params[:id]}/stops", method: :post do  %>
+                  <div>
+                    <%= label_tag :name %>
+                    <%= text_field_tag :name, nil, class: "form-control"  %>
+                  </div>
+                  <div>
+                    <%= label_tag :address %>
+                    <%= text_field_tag :address, nil, class: "form-control"  %>
+                  </div>
+                  <div>
+                    <%= label_tag :description %>
+                    <%= text_field_tag :description, nil, class: "form-control"  %>
+                  </div>
+                  <div>
+                    <%= label_tag :tagline %>
+                    <%= text_field_tag :tagline, nil, class: "form-control"  %>
+                  </div>
+                  <div>
+                    <%= label_tag :Stop_number %>
+                    <%= text_field_tag :order, nil, class: "form-control"  %>
+                  </div>
+                  <a class="btn buttonTransparent"> <%= submit_tag "Submit" %> </a>
+                <% end %> 
+          </div>
+                 
+                    <% end %>
+
+
+
+                  <div class="form-group col-sm-6 col-xs-12">
+                    <label for="">Country</label>
+                    <div class="bookingDrop">
+                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
+                        <option value="0">Select Country</option>
+                        <option value="1">USA</option>
+                        <option value="2">UK</option>
+                        <option value="3">Canada</option>            
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-xs-12">
+                    <label for="" class="blankLabel">Expiration Date</label>
+                    <div class="bookingDrop">
+                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
+                        <option value="0">January</option>
+                        <option value="1">July</option>
+                        <option value="2">August</option>
+                        <option value="3">September</option>            
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6 col-xs-12">
+                    <label for=""></label>
+                    <div class="bookingDrop">
+                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
+                        <option value="0">Year</option>
+                        <option value="1">2016</option>
+                        <option value="2">2017</option>
+                        <option value="3">2018</option>            
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
   </div>
-  <div>
-    <%= label_tag :address %>
-    <%= text_field_tag :address %>
-  </div>
-  <div>
-    <%= label_tag :description %>
-    <%= text_field_tag :description %>
-  </div>
-  <div>
-    <%= label_tag :Stop_number %>
-    <%= text_field_tag :order %>
-  </div>
-  <%= submit_tag "Submit" %>
-<% end %>
+
+  
+
+</body>
+
+</html>

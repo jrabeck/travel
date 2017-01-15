@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
   get '/trips/new', to: 'trips#new'
   get '/trips/:id', to: 'trips#show'
-
+  get '/comments/:id', to: 'comments#destroy'
+  delete '/comments/:id', to: 'comments#destroy'
 
   # post '/login', to: 'sessions#create'
   # get '/signup', to: 'users#new'
@@ -22,20 +23,29 @@ Rails.application.routes.draw do
   # get '/logout', to: 'sessions#destroy'
 
   get 'stops/index', to: "stops#index"
+  patch "/trips/:id", to: "trips#archive"
   get '/stops/:id', to: 'stops#show'
   get '/trips/:id/stop/new', to: 'stops#new'
   post '/trips/:id/stops', to: "stops#create"
+  post '/trips/:id/comments', to: "comments#create"
+  post '/stops/:id/comments', to: "comments#create"
   post '/trips', to: "trips#create"
   get '/users/index', to: "users#index"
   get '/users/:id', to: "users#show"
   get "/users/follow/:id", to: "follows#create"
-  delete "users/follow/:id", to: "follows#destroy"
+  delete "/users/follow/:id", to: "follows#destroy"
+  post "/users/traveling", to: "users#traveling"
 
   get '/trip/:id/edit', to: "trips#edit"
   #update (same as create except saying updated)
   patch '/trips/:id', to: "trips#update"
   
-  get"/testfeed", to: "users#testfeed"
+  get "/testfeed", to: "users#testfeed"
+  post "/searchall", to: "searches#all"
+  get "/searchall", to: "searches#all"
+  post "/searchpeople", to: "searches#people"
+
+
 
 
 
