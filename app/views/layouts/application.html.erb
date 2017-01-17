@@ -101,11 +101,9 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li class="active dropdown singleDrop">
-                <a href="/users/<%=current_user.id%>">Profile</a>
-              </li>
+
               <li class="dropdown singleDrop">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your trips</a>
+                <a href="/users/<%=current_user.id%>" role="button" aria-haspopup="true" aria-expanded="false"><%=current_user.first_name%> <%= current_user.last_name %></a>
 
                 <ul class="dropdown-menu dropdown-menu-right">
 
@@ -125,29 +123,6 @@
                 </ul>
               </li>
 
-            
-              <li class="dropdown singleDrop">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">friends' trips</a>
-
-                <ul class="dropdown-menu dropdown-menu-right">
-
-                    <% current_user.following.each do |follower| %>
-                      <% follower.trips.each do |trip| %>
-                        <% if current_user.trips.exclude?(trip) %>
-                        <li class="dropdown dropdown-submenu"><a href="/trips/<%=trip.id%>"><%=trip.name%></a>
-                            <% if trip.stops.length > 0 %>
-                              <ul class="dropdown-menu">
-                                <% trip.stops.each do |stop| %>
-                                <li><a href="/stops/<%=stop.id%>"><%=stop.name%></a></li>
-                                <% end %>
-                              </ul>
-                            <% end %>
-                        </li>
-                        <% end %>
-                      <% end %>
-                    <% end %>                
-                </ul>
-              </li>
 
               <li class="dropdown singleDrop">
                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">friends</a>
@@ -156,10 +131,9 @@
 
                     <% current_user.following.each do |follower| %>
 
-                        <li class="dropdown dropdown-submenu"><a href="/users/<%=follower.id%>"><%=follower.first_name%> <%follower.last_name %> </a>
+                        <li class="dropdown dropdown-submenu"><a href="/users/<%=follower.id%>"><%=follower.first_name%> <%=follower.last_name %> </a>
                         
                         <% follower.trips.each do |trip| %>
-                          <%=trip.users.exclude?(current_user) %>
                           <% end %>
                           <% if follower.trips.length > 0  %>
                             <ul class="dropdown-menu">
@@ -190,7 +164,7 @@
                        <input type="text" name="search" class="form-control" aria-describedby="basic-addon2">
                       
                       <!-- <input type="text" class="form-control" placeholder="Search..." aria-describedby="basic-addon2"> -->
-                      <button type="submit"><span class="input-group-addon" id="basic-addon2">Search</span></button>
+                      <button  type="submit"><span class="input-group-addon" id="basic-addon2">Search</span></button>
                       <% end %>
                     </span>
                   </li>
@@ -203,6 +177,7 @@
       </nav>
     </header>
   <% end %>
+
 
     <%= yield %>
 

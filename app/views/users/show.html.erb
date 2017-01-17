@@ -28,8 +28,11 @@
                   <br> 
                   <% if @user.id != current_user.id %>
 											<!-- Follow/Unfollow Button -->
-											<% if @user.following.pluck(:id).include?(@user.id) %>
-												<h5 class="btn buttonTransparent"><%= link_to "UnFollow", "/users/follow/#{@user.id}", method: :delete %></h5>
+											<% if current_user.following.pluck(:id).include?(@user.id) %>
+												<h5 class="btn buttonTransparent">
+
+                        <%= link_to "UnFollow", "/users/unfollow/#{@user.id}", method: :get %></h5>
+
 												<% else %>
 												<h5><%= link_to "Follow", "/users/follow/#{@user.id}" %></h5>
 											<% end %>

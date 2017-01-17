@@ -1,20 +1,5 @@
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-  <!-- SITE TITTLE -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-</head>
-
-<body>
-  <div class="main-wrapper">
-
-
+<div ng-app="app">
     <!-- PAGE TITLE -->
     <section class="pageTitle" style="background-image:url(img/pages/page-title-bg4.jpg);">
       <div class="container">
@@ -86,7 +71,7 @@
                 </ul>
 
                 <!-- Tab panes -->
-                <div class="tab-content">
+                <div id="friendsidebar" class="tab-content">
                   <div role="tabpanel" class="tab-pane active" id="recent">
               <!-- <div class="media">
                       <a class="media-left" href="#">
@@ -111,7 +96,7 @@
                         <%= link_to 'Archive', "/trips/#{trip.id}", method: :patch %>
                         <br>
                         <% if trip.users.length > 1 %>
-                          Tr@\/e|ers:
+                          Other Tr@\/e|ers:
                               <div class="panel-body">
                                 <% trip.users.each do |user|%>
                                   <ul class="list-inline ">
@@ -119,8 +104,11 @@
                                           <li><a href="/users/<%=user.id%>">
                                           <img src="<%=user.images.first.url%>" alt="Instagram-image"></a></li>
                                     <% elsif user.id != current_user.id %>
-                                          <li><a href="/users/<%=user.id%>">
-                                          <%= user.first_name %> <br> <%= user.last_name%>
+                                          <li><a class="btn buttonTransparent smalltext" href="/users/<%=user.id%>">
+                                          <%= user.first_name %> <br/> 
+                                          <div class="centered"> 
+                                          <%= user.last_name%>
+                                          </div>
                                           </a></li>
                                     <% end %>
                                   </ul>
@@ -156,16 +144,34 @@
                   </div>
                   <div role="tabpanel" class="tab-pane" id="popular">
                     <% current_user.following.each do |follower|%>
-                    <%= link_to "#{follower.first_name}", "users/#{follower.id}" %> 
-                    <br>
+                      <% if follower.images.length > 0 %>
+                        <a href="/users/<%=follower.id%>">
+                              <img class="friendpic" src="<%=follower.images.first.url%>" alt="Instagram-image"> 
+   
+                              <%=follower.first_name%> <%=follower.last_name%></a>
+                      <% else %>
+                      <img class="friendpicearth" src="/img/earth.png" alt="Instagram-image"> 
+                      <%= link_to "#{follower.first_name} #{follower.last_name}", "users/#{follower.id}" %> 
+                      <br>
+                      <% end %>
+                  <br>
+                  <br>
                     <% end %>
-                  <br>
-                  <br>
 
+                  <div ng-controller= "searchCtrl">
                    <span class="input-group">
-                      <input type="text" class="form-control" placeholder="Find people..." aria-describedby="basic-addon2">
-                      <span class="input-group-addon" id="basic-addon2"> Search
+                      <input ng-model="searchterm" type="text" class="form-control" placeholder="Find people..." aria-describedby="basic-addon2">
+                      <span ng-click="searchusers(searchterm)" class="input-group-addon" id="basic-addon2" style="cursor: hand; cursor: pointer;"> Search
+                       </span>
                    </span>
+                  <br />
+
+
+                  <div ng-repeat="user in users">
+                    <a href="/users/{{ user.id}}"> {{ user.first_name }} {{ user.last_name }} </a>
+                  </div>
+
+                  </div>
 
 
 
@@ -174,12 +180,6 @@
                   <div role="tabpanel" class="tab-pane" id="new">New</div>
                 </div>
               </div>
-              <%= form_tag "/searchpeople", method: :post do %>
-                       <input type="text" name="search" class="form-control" aria-describedby="basic-addon2">
-                      
-                      <!-- <input type="text" class="form-control" placeholder="Search..." aria-describedby="basic-addon2"> -->
-                      <button type="submit"><span class="input-group-addon" id="basic-addon2">Search</span></button>
-                      <% end %>
                 
               </div>
             </aside>
@@ -191,80 +191,152 @@
 
           <% end %> 
 
-          <div class="col-sm-9 col-xs-12">
+          <div class="col-sm-9 col-xs-12 whitediv">
             <div class="row">    
+              <% @activities.each do |activity| %>
+                     <% id = activity.trackable_id %>
+                     <% type = activity.trackable_type %>
 
-               <% current_user.following.each do |follower| %>
-                <% follower.trips.each do |trip| %>
-                       
-              <!-- FEED ITEM -->
-              <div class="col-xs-12">
-                <div class="media blogPostListItem">
-                  <a class="media-left" href="/trips/<%= trip.id%>">
-                    <img class="media-object" src="img/blog/blog-02.png" alt="blog-image">
-                  </a>
-                  <div class="media-body">
-                    <h4><a  href="/trips/<%= trip.id%>" class="blogTitle"><%= trip.name %>
-                      </a></h4>
-                    <ul class="list-inline blogInfo">
-                      <li><i class="fa fa-user" aria-hidden="true"></i><a href="#">
-                        <% trip.users.each do |user| %>
-                        <%= user.first_name + " " + user.last_name%>
-                        <br>
-                        <%end%> 
-                      </a></li>
-                      <li><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</li>
-                      <li><i class="fa fa-tags" aria-hidden="true"></i>Travel</li>
-                      <li><i class="fa fa-envelope" aria-hidden="true"></i>8 com</li>
-                    </ul>
-                    <p>
-                    <div ng-app="app">
-                      {{ 1 + 1 }}
-                    </div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                  <% if (activity.key == "trip.update")%>
 
-                    
-                  </div>
-                </div>
-              </div>
-              <!-- FEED ITEM  -->
+                    <% activity_match = (PublicActivity::Activity.find_by(trackable_id: activity.trackable_id, key: "trip.create")) %>
+                    <% if (activity_match) %>
+                      <% if activity.created_at - activity_match.created_at > 1.hour %>
+                           <br>
+                           <h3><%= Trip.find_by(id: id).name %> has been updated!</h3>
+                           <br>
+                            <div class="container whitediv">
+                              <div class="col-sm-9 col-xs-12">
+                                <div class="row">   
+                                  <div class="col-xs-12">
+                                    <div class="media blogPostListItem ">
+                                      <a class="media-left" href="/trips/<%=Trip.find_by(id: id).id%>">
+                                        <% if Trip.find_by(id: id).images.length > 0 %>
+                                          <img class="media-object feedpic" src="<%=Trip.find_by(id: id).images.first.url%>" alt="blog-image">
+                                        <% else %>
+                                          <img class="earth feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                                        <% end %>
+                                      </a>
+                                        <div class="media-body">
+                                         <h4><a  href="/trips/<%=Trip.find_by(id: id).id%>" class="blogTitle"><%= Trip.find_by(id: id).tagline %>
+                                          </a></h4>
+                                          <p> Tr@\/e|ers on this trip: <br>
+                                          <% Trip.find_by(id: id).users.each do |user| %>
+                                          <a href="/users/<%=user.id%>"> <%= user.first_name %> <%user.last_name%> </a>
+                                          <% end %>
+                                          </p>
+                                                <p>
+                                                 <%= Trip.find_by(id: id).description %></p>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                      <% end %>
+                    <% end %>
 
-                <% trip.stops.each do |stop| %> 
+                  <% elsif (activity.key == "trip.create") %>
+                         
+                         <% if Trip.find_by(id: id) != nil %>
+                           <h3> A new Trip: "<%= Trip.find_by(id: id).name %>," has been created! </h3>
+                            <div class="container">
+                              <div class="col-sm-9 col-xs-12">
+                                <div class="row">   
+                                  <div class="col-xs-12">
+                                    <div class="media blogPostListItem">
+                                      <a class="media-left" href="/trips/<%=Trip.find_by(id: id).id%>">
+                                        <% if Trip.find_by(id: id).images.length > 0 %>
+                                          <img class="feedpic media-object" src="<%=Trip.find_by(id: id).images.first.url%>" alt="blog-image">
+                                        <% else %>
+                                          <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                                        <% end %>
+                                      </a>
+                                        <div class="media-body">
+                                         <h4><a  href="/trips/<%=Trip.find_by(id: id).id%>" class="blogTitle"><%= Trip.find_by(id: id).tagline %>
+                                          </a></h4>
+                                          <p> Tr@\/e|ers on this trip: <br>
+                                          <% Trip.find_by(id: id).users.each do |user| %>
+                                          <a href="/users/<%=user.id%>"> <%= user.first_name %> <%user.last_name%> </a>
+                                          <% end %>
+                                          </p>
+                                                <p><%= Trip.find_by(id: id).description %></p>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                         <% end %>
+                         
 
-                 
-                <div class="col-xs-12">
-                  <div class="media blogPostListItem">
-                    <a class="media-left" href="/stops/<%="#{stop.id}"%>">
-                      <img class="media-object" src="img/blog/blog-02.png" alt="blog-image">
-                    </a>
-                    <div class="media-body">
-                      <h4><a  href="/stops/<%="#{stop.id}"%>" class="blogTitle"><%= stop.name %></a></h4>
-                      <ul class="list-inline blogInfo">
-                        <li><i class="fa fa-user" aria-hidden="true"></i><a href="#"> 
-                        <% trip.users.each do |user| %>
-                        <%= user.first_name + " " + user.last_name%>
-                        <%end%>
-                        <br>
-                        </a></li>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</li>
-                        <li><i class="fa fa-tags" aria-hidden="true"></i>Travel</li>
-                        <li><i class="fa fa-envelope" aria-hidden="true"></i>8 com</li>
-                      </ul>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                  <% elsif (activity.key == "stop.update") %>
+                    <% activity_match = (PublicActivity::Activity.find_by(trackable_id: activity.trackable_id, key: "stop.create")) %>
+                    <% if Stop.find_by(id: id) != nil && Stop.find_by(id: id).archived == false%>
+                      <% if activity.created_at - activity_match.created_at > 1.hour %>
+                           <br>
+                           <h3> <%= Stop.find_by(id: id).name %> has been updated! </h3>
+                           <br>
+                            <div class="container">
+                            <div class="col-sm-9 col-xs-12">
+                              <div class="row">   
+                                <div class="col-xs-12">
+                                  <div class="media blogPostListItem">
+                                    <a class="media-left" href="/stops/<%=Stop.find_by(id: id).id%>">
+                                      <% if Stop.find_by(id: id).images.length > 0 %>
+                                          <img class="feedpic media-object" src="<%=Stop.find_by(id: id).images.first.url%>" alt="blog-image">
+                                        <% else %>
+                                          <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                                        <% end %>
+                                    </a>
+                                      <div class="media-body">
+                                       <h4><a  href="/stops/<%=Stop.find_by(id: id).id%>" class="blogTitle"><%= Stop.find_by(id: id).tagline %>
+                                        </a></h4>
+                                              <p><%= Stop.find_by(id: id).description %></p>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      <% end %>
+                    <% end %>
+
+
+                  <% elsif (activity.key == "stop.create") %>
+                      <% if Stop.find_by(id: id) %>
+
+                         <br>
+                         <h3> a new stop: "<%= Stop.find_by(id: id).name %>," has been created! </h3>
+                         <br>
+                          <div class="container">
+                            <div class="col-sm-9 col-xs-12">
+                              <div class="row">   
+                                <div class="col-xs-12">
+                                  <div class="media blogPostListItem">
+                                    <a class="media-left" href="/stops/<%=Stop.find_by(id: id).id%>">
+                                      <% if Stop.find_by(id: id).images.length > 0 %>
+                                          <img class=" feedpicmedia-object" src="<%=Stop.find_by(id: id).images.first.url%>" alt="blog-image">
+                                        <% else %>
+                                          <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                                        <% end %>
+                                    </a>
+                                      <div class="media-body">
+                                       <h4><a  href="/stops/<%=Stop.find_by(id: id).id%>" class="blogTitle"><%= Stop.find_by(id: id).tagline %>
+                                        </a></h4>
+                                              <p><%= Stop.find_by(id: id).description %></p>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      <% end %>
+
                       
-                    </div>
-                  </div>
-                </div>
-
+                  <% end %>
 
                 <% end %>
-                <% end %>
-                <% end %>
-
-            </div>
-          </div>
-        </div>
-        
         <div class="row">
           <div class="col-xs-12">
             <div class="paginationCenter paginationTransparent">
@@ -292,10 +364,6 @@
     </section>
 
 
-  </div>
 
   <h2> <%= link_to "All Users", '/users/index' %> </h2>
-
-</body>
-
-</html>
+  </div>

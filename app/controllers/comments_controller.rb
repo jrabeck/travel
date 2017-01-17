@@ -19,7 +19,13 @@ class CommentsController < ApplicationController
 		@comment = Comment.find_by(id: params[:id])
 		@comment.destroy
 		@trip = Trip.find_by(id: @comment.commentable_id)
+		@stop = Stop.find_by(id: @comment.commentable_id)
+		if @comment.commentable_type == "Trip"
 		redirect_to "/trips/#{@trip.id}"
+		elsif @comment.commentable_type == "Stop"
+		redirect_to "/stops/#{@stop.id}"
+		end
+
 	end
 
 end

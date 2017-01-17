@@ -27,11 +27,10 @@ trips = Trip.create ([
 stops = Stop.create ([
 	{name: "The White House", address: "1600 Pennsylvania Avenue", trip_id: 1, order: 1},
 	{name: "Abbey Road Studios", address: "3 Abbey Rd, London NW8 9AY, UK", trip_id: 2, order: 1},
-	{name: "Apple Corp", address: "95 Wigmore Street", trip_id: 2, order: 2}
+	{name: "Apple Corp", address: "95 Wigmore Street", trip_id: 2, order: 2},
 
 	#LC Expidetion
-	{name: "The White House", address: "1600 Pennsylvania Avenue", description: "", tagline: "", trip_id: 3, order: 1},
-	
+	{name: "The White House", address: "1600 Pennsylvania Avenue", description: "", tagline: "", trip_id: 3, order: 1}
 	])
 
 follows = Follow.create ([
@@ -60,4 +59,7 @@ usertrip = Usertrip.create ([
 	{user_id: 6, trip_id: 3},
 	{user_id: 5, trip_id: 3},
 	{user_id: 4, trip_id: 3},
+	])
+
+images = Image.create ([
 	])

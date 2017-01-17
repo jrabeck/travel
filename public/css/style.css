@@ -4787,9 +4787,12 @@ header {
   padding-bottom: 50px;
   margin-bottom: 50px;
   border-bottom: 1px solid #e5e5e5;
+  background-color: white;
+
 }
 .blogPostListItem .media-body {
   padding: 20px;
+    background-color: white;
 }
 .blogPostListItem .media-left img {
   width: 100%;

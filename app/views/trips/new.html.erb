@@ -85,58 +85,18 @@
                         <%= text_field_tag :attendee4_email, nil, class: "form-control"  %>
                         </div>
                           <div>
-                        <%= label_tag :"Attendee Email" %>
+                        <%= label_tag "Attendee Email" %>
                         <%= text_field_tag :attendee5_email, nil, class: "form-control"  %>
                         </div>
+
+                        <%= label_tag "time" %>
+                        <div class="bookingDrop">
+                        <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'} %>
+                        </div>
+
                  </div>
                       <%= submit_tag "Submit" %>
                     <% end %>
-                  <div class="form-group col-sm-6 col-xs-12">
-                    <label for="">Country</label>
-                    <div class="bookingDrop">
-                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
-                        <option value="0">Select Country</option>
-                        <option value="1">USA</option>
-                        <option value="2">UK</option>
-                        <option value="3">Canada</option>            
-                      </select>
-                    </div>
-                  </div>
-
-                                    <div class="form-group col-sm-6 col-xs-12">
-                    <label for="">Country</label>
-                    <div class="bookingDrop">
-                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
-                        <option value="0">Select Country</option>
-                        <option value="1">USA</option>
-                        <option value="2">UK</option>
-                        <option value="3">Canada</option>            
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6 col-xs-12">
-                    <label for="" class="blankLabel">Expiration Date</label>
-                    <div class="bookingDrop">
-                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
-                        <option value="0">Month</option>
-                        <option value="1">July</option>
-                        <option value="2">August</option>
-                        <option value="3">September</option>            
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6 col-xs-12">
-                    <label for=""></label>
-                    <div class="bookingDrop">
-                      <select name="guiest_id3" id="guiest_id3" class="select-drop">
-                        <option value="0">Year</option>
-                        <option value="1">2016</option>
-                        <option value="2">2017</option>
-                        <option value="3">2018</option>            
-                      </select>
-                    </div>
-                  </div>
-                  
                 </div>
               </form>
             </div>

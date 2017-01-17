@@ -2,6 +2,23 @@ body {
 	background-image: url(subtle_grunge.png);
 }
 
+.whitediv {
+	background-color: white;
+	overflow: hidden;
+	border-radius: 30px;
+		h3 {
+			margin-left: 50px;
+		}
+
+}
+
+.smalltext {
+	font-size: 0.5em;
+	padding-top: 4px;
+	text-align: center;
+	line-height: 12px !important;
+}
+
 .editButton {
   height: 20px;
   width: 20px;
@@ -21,15 +38,19 @@ h2.editButtonText:hover img.editButton{
 }
 
 .relatedItem {
-		height: 185px !important;
-		width: 200px !important;
+	height: 185px !important;
+	width: 200px !important;
+	text-align: center;
+		img {
+		height: 100%;
+		min-width: 100%;
+		min-height:100%;
 		text-align: center;
-	img {
-	height: 100%;
-	width: auto;
-	margin-left: auto !important;
-	margin-right: auto !important;
-	}
+		width: auto;
+		max-height: 185px;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		}
 }
 
 .relatedItem .maskingInfo h4 {
@@ -48,7 +69,7 @@ h2.editButtonText:hover img.editButton{
 
  .timersize {
  	height: 25% !important;
- 	width: 75% !important''
+ 	width: 75% !important;
  }
 
 .image-row {
@@ -63,17 +84,27 @@ h2.editButtonText:hover img.editButton{
  .max-carousel {
 
  	max-height: 563px !important; 
- 	min-height: 563px !important;
- 	text-align: center !important;
- 	margin-left: auto;
- 	margin-right: auto;
- 	margin-top: auto !important;
- 	vertical-align: center !important;
- 	max-height: 100%;  
 
+ 	min-width: none !important;
+ 	text-align: center !important;
+ 	margin-left: auto !important;
+ 	margin-right: auto !important;
+ 	margin-top: auto !important;
+ 	margin-bottom: auto !important;
+ 	vertical-align: center !important; 
+ 	height: auto;
+	width: auto; 
+	
 
  }
 
+ .position_relative {
+ 	 overflow: hidden;
+ }
+
+.position_absolute {
+	position: absolute;
+}
 .carousel_align {
 	 vertical-align: middle;
 }
@@ -122,7 +153,9 @@ h2.editButtonText:hover img.editButton{
 	border-radius: 35px;
 }
 
-
+.margin {
+	margin-left: 62px;
+}
 
 
 // Landing page public CSS
@@ -159,5 +192,48 @@ h2.editButtonText:hover img.editButton{
 
 }
 
+.feedpic {
+	height: 250px !important;
+	width: auto !important; 
+	border-radius: 50px;	
+
+
+	
+}
+
+.feedpicearth {
+	height: 175px !important; 
+	width: auto !important; 
+	margin-left: 75px;
+}
+
+.friendpic {
+	height: 30px !important;
+	width: auto;
+}
+
+.friendpicearth {
+	height: 40px !important;
+	width: auto;
+}
+
+.comments {
+	margin-top: 40px;
+}
+
+.overflow_hidden {
+	overflow: hidden;
+}
+
+
+
+#friendsidebar {
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.media-body {
+	width: 50% !important;
+}
 
 

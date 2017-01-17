@@ -7,13 +7,15 @@ Rails.application.routes.draw do
 
   # devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  delete '/comments/:id', to: 'comments#destroy'
   get '/', to: 'home#home'
 
   get '/trips/new', to: 'trips#new'
   get '/trips/:id', to: 'trips#show'
-  get '/comments/:id', to: 'comments#destroy'
-  delete '/comments/:id', to: 'comments#destroy'
+  get 'stops/comments/:id', to: 'comments#destroy'
+  delete '/stops/comments/:id', to: 'comments#destroy'
+    get '/comments/:id', to: 'comments#destroy'
+  
 
   # post '/login', to: 'sessions#create'
   # get '/signup', to: 'users#new'
@@ -32,8 +34,8 @@ Rails.application.routes.draw do
   post '/trips', to: "trips#create"
   get '/users/index', to: "users#index"
   get '/users/:id', to: "users#show"
+  get "/users/unfollow/:id", to: "follows#destroy"
   get "/users/follow/:id", to: "follows#create"
-  delete "/users/follow/:id", to: "follows#destroy"
   post "/users/traveling", to: "users#traveling"
 
   get '/trip/:id/edit', to: "trips#edit"
@@ -43,8 +45,9 @@ Rails.application.routes.draw do
   get "/testfeed", to: "users#testfeed"
   post "/searchall", to: "searches#all"
   get "/searchall", to: "searches#all"
-  post "/searchpeople", to: "searches#people"
-
+  post "/searchusers/:searchterm", to: "searches#users"
+  get "/searchusers/:searchterm", to: "searches#users"
+  get "/trips/adduser", to: "trips#adduser"
 
 
 
