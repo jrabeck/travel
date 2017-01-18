@@ -47,6 +47,7 @@ class TripsController < ApplicationController
 
 
   def edit
+    @trip = Trip.find_by(id: params[:id])
   end
 
   def archive
@@ -55,5 +56,15 @@ class TripsController < ApplicationController
     @trip.save
     redirect_to '/'
   end
+
+  def update
+    @trip = Trip.find_by(id: params[:id]) 
+    @trip.name = params[:name]
+    @trip.description = params[:description]
+    @trip.tagline = params[:tagline] 
+    @trip.save 
+    redirect_to "/trips/#{@trip.id}"
+  end
+
 
 end

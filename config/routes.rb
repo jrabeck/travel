@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # get '/logout', to: 'sessions#destroy'
 
   get 'stops/index', to: "stops#index"
-  patch "/trips/:id", to: "trips#archive"
+  patch "/trips/:id/archive", to: "trips#archive"
   get '/stops/:id', to: 'stops#show'
   get '/trips/:id/stop/new', to: 'stops#new'
   post '/trips/:id/stops', to: "stops#create"
@@ -48,6 +48,9 @@ Rails.application.routes.draw do
   post "/searchusers/:searchterm", to: "searches#users"
   get "/searchusers/:searchterm", to: "searches#users"
   get "/trips/adduser", to: "trips#adduser"
+  get "/trips/:id/edit", to: "trips#edit"
+  patch "/trips/:id", to: "trips#update"
+  get "/trips/:id/archive", to: "trips#archive"
 
 
 

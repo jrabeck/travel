@@ -1,1 +1,88 @@
-edit.html.erb
+<!-- asks what places you will be visiting, and you keep adding them through a form. -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- SITE TITTLE -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create a Trip</title>
+  
+  
+</head>
+
+<body>
+  <div class="main-wrapper">
+
+    
+    <!-- PAGE TITLE -->
+    <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg7.jpg);">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="titleTable">
+              <div class="titleTableInner">
+                <div class="pageTitleInfo">
+                  <h1>Create a Trip!</h1>
+                  <div class="under-border"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- WHITE SECTION FILTER-->
+    <section class="mainContentSection">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 col-sm-push-8 col-xs-12">
+            
+          </div>
+          <div class="col-sm-8 col-sm-pull-4 col-xs-12">
+            <div class="infoTitle">
+            </div>
+
+            <div class="bookingForm">
+             <%= form_tag "/trips/#{@trip.id}", method: :patch do  %>
+              <!-- <form action="/trips" method="POST" role="form" class="form"> -->
+                <div class="row">
+                 <div class="form-group col-sm-6 col-xs-12">
+                  <%= label_tag :name %>
+                    <%= text_field_tag :name, nil, class: "form-control", value: @trip.name %>
+              
+                  
+                      <div>
+                        <%= label_tag :description %>
+                        <%= text_field_tag :description, nil, class: "form-control", value: @trip.description  %>
+                      </div>
+                      <div>
+                        <%= label_tag :tagline %>
+                        <%= text_field_tag :tagline, nil, class: "form-control", value: @trip.tagline  %>
+                      </div>
+                 </div>
+                      <%= submit_tag "Submit" %>
+                    <% end %>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </div>
+
+  
+
+</body>
+
+</html>

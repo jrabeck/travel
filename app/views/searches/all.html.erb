@@ -1,21 +1,291 @@
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
-<% @users.each do |user| %>
-<%= user.first_name %>
-<br>
-<% end %>
+<div ng-app="app">
+    <!-- PAGE TITLE -->
+    <section class="pageTitle" style="background-image:url(img/pages/page-title-bg4.jpg);">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="titleTable">
+              <div class="titleTableInner">
+                <div class="pageTitleInfo">
+                  <h1> Search results for: <%=@search_term%> </h1>
+                  <div class="under-border"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<% @stops.each do |stop| %>
-<%= stop.name %>
-<br>
-<% end %>
+    <!-- PAGE CONTENT -->
+    <section class="mainContentSection blogSidebar">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3 col-xs-12">
+            <aside>
+              <div class="panel panel-default home_panel">
+               <!--  <div class="panel-heading">Search</div> -->
+                <div class="panel-body">
+                  <!-- <div class="input-group">
+                    <input type="text" class="form-control" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" aria-hidden="true"></i></span>
+                  </div> -->
+                <!-- </div> -->
+                  <div class="center">
+                    <a href="/trips/new"> <img id="earth" src="/img/earth.png">
+                     </a>
+                     <br>
 
-<% @trips.each do |trip| %>
-<%= trip.name %>
-<br>
-<% end %>
+                     <a class="btn buttonTransparent" href="/trips/new"> Add a Trip! </a>
+
+                    <form action="/users/traveling" method="post">
+                        <button name="traveling_button" >
+                        <% if current_user.traveling == true %>
+                        I'm done traveling!
+                        <% elsif current_user.traveling == false %>
+                        I'm traveling now!
+                        <% end %>
+                          
+                        </button>
+                        
+                    </form>
+
+                    
+                     <a class="btn buttonTransparent" value="traveling"  href="/users/traveling"> I'm Tr@\/e|ing now! </a>
+
+
+
+                  </div>
+                </div>
+              <div role="tabpanel" class="tabArea">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                  <li role="presentation" class="active">
+                    <a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">Trips</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#popular" aria-controls="popular" role="tab" data-toggle="tab">Friends</a>
+                  </li>
+                
+                </ul>
+
+                <!-- Tab panes -->
+                <div id="friendsidebar" class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="recent">
+              <!-- <div class="media">
+                      <a class="media-left" href="#">
+                        <img class="media-object" src="img/blog/tab-01.png" alt="Image">
+                      </a>
+                      <div class="media-body">
+                        <h4><a href="#" class="media-heading">Totam Rem Aperiam Eaque.</a></h4>
+                        <p><i class="fa fa-calendar" aria-hidden="true"></i>5 March, 2016</p>
+                      </div>
+                    </div> -->
+                    <% @trips.each do |trip| %>
+                    <% if trip.archived == nil || trip.archived == false %>
+                      <div class="media">
+                        <a class="media-left" href="/trips/<%=trip.id%>">
+                          <img class="media-object" src="/img/earth.png" alt="Image">
+                        </a>
+                        <div class="media-body">
+                          <h4><a href= <%= "/trips/#{trip.id}" %> class="media-heading">
+                          <%=  "#{trip.name}" %></a></h4>
+                          <p><i class="fa fa-calendar" aria-hidden="true"></i>5 March, 2016 - <br> 7 June 2016</p>
+                        </div>
+                        <%= link_to 'Archive', "/trips/#{trip.id}", method: :patch %>
+                        <br>
+                        <% if trip.users.length > 1 %>
+                          Other Tr@\/e|ers:
+                              <div class="panel-body">
+                                <% trip.users.each do |user|%>
+                                  <ul class="list-inline ">
+                                    <% if (user.id != current_user.id) && (user.images.length > 0) %>
+                                          <li><a href="/users/<%=user.id%>">
+                                          <img src="<%=user.images.first.url%>" alt="Instagram-image"></a></li>
+                                    <% elsif user.id != current_user.id %>
+                                          <li><a class="btn buttonTransparent smalltext" href="/users/<%=user.id%>">
+                                          <%= user.first_name %> <br/> 
+                                          <div class="centered"> 
+                                          <%= user.last_name%>
+                                          </div>
+                                          </a></li>
+                                    <% end %>
+                                  </ul>
+                                <% end %>
+                              </div>    
+                        <% end %>
+
+                        <% stop_images = [] %>
+                        <% trip.stops.each do |stop| %>
+                          <% stop.images.each do |image|%>
+                            <% stop_images << image %>
+                          <% end %>
+                        <% end %>
+
+                      <% if stop_images.length > 0 %>
+                        Stops:
+                        <div class="panel-body">
+                            <ul class="list-inline">
+                              <% trip.stops.each do |stop| %>
+                                <% if stop.images.first %>
+                                  <li><a href="/stops/<%=stop.id%>"><img src="<%=stop.images.first.url%>" alt="Instagram-image"></a></li>
+                                <% end %>
+                              <% end %>
+                            </ul>
+                        </div>
+                      <% end %>
+                        </div>
+                    <% end %>    
+                    <%end%>
+
+                                        <div class="centered">
+                    <a href="/users/archive" class="btn buttonTransparent"> Archive </a>
+                    </div>
+
+
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="popular">
+                    <% current_user.following.each do |follower|%>
+                      <% if follower.images.length > 0 %>
+                        <a href="/users/<%=follower.id%>">
+                              <img class="friendpic" src="<%=follower.images.first.url%>" alt="Instagram-image"> 
+   
+                              <%=follower.first_name%> <%=follower.last_name%></a>
+                      <% else %>
+                      <img class="friendpicearth" src="/img/earth.png" alt="Instagram-image"> 
+                      <%= link_to "#{follower.first_name} #{follower.last_name}", "users/#{follower.id}" %> 
+                      <br>
+                      <% end %>
+                  <br>
+                  <br>
+                    <% end %>
+
+                  <div ng-controller= "searchCtrl">
+                   <span class="input-group">
+                      <input ng-model="searchterm" type="text" class="form-control" placeholder="Find people..." aria-describedby="basic-addon2">
+                      <span ng-click="searchusers(searchterm)" class="input-group-addon" id="basic-addon2" style="cursor: hand; cursor: pointer;"> Search
+                       </span>
+                   </span>
+                  <br />
+
+
+                  <div ng-repeat="user in users">
+                    <a href="/users/{{ user.id}}"> {{ user.first_name }} {{ user.last_name }} </a>
+                  </div>
+
+                  </div>
+
+
+
+                 
+                  </div>
+
+              </div>
+                
+              </div>
+            </aside>
+          </div>
+
+
+
+
+
+          <div class="col-sm-9 col-xs-12 whitediv">
+          	<% @users.each do |user| %>
+	            <div class="feed-item whitediv">
+	              <div class="row media blogPostListItem ">
+	              	<div class="col-md-6">
+	                  <a class="searchname" href="/users/<%=user.id%>">
+	                    <%=user.first_name%> <%=user.last_name%>
+	                  </a>
+	                </div>
+	              	</div>
+	           	</div>             
+            <% end %>
+
+            <% @trips.each do |trip| %>      
+
+             <br>
+             <h3><%=trip.name%></h3>
+             <br>
+
+                  <div class="whitediv">   
+                    <div class="col-xs-12">
+                      <div class="row media blogPostListItem">
+                      <div class="col-md-6" >
+                        <a class="" href="/trips/<%=trip.id%>">
+                          <% if trip.images.length > 0 %>
+                              <img class=" feedpicmedia-object" src="<%=trip.images.first.url%>" alt="blog-image">
+                            <% else %>
+                              <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                            <% end %>
+                        </a>
+                        </div>
+                          <div class="col-md-6">
+                           <h4><a  href="/trips/<%=trip.id%>" class="blogTitle"><%= trip.tagline %>
+                            </a></h4>
+                                  <p><%= trip.description %></p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+            <% end %>
+
+            <% @stops.each do |stop| %>      
+
+             <br>
+             <h3><%=stop.name%></h3>
+             <br>
+
+                  <div class="whitediv">   
+                    <div class="col-xs-12">
+                      <div class="row media blogPostListItem">
+                      <div class="col-md-6" >
+                        <a class="" href="/trips/<%=trip.id%>">
+                          <% if stop.images.length > 0 %>
+                              <img class=" feedpicmedia-object" src="<%=stop.images.first.url%>" alt="blog-image">
+                            <% else %>
+                              <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                            <% end %>
+                        </a>
+                        </div>
+                          <div class="col-md-6">
+                           <h4><a  href="/stops/<%=stop.id%>" class="blogTitle"><%= stop.tagline %>
+                            </a></h4>
+                                  <p><%= stop.description %></p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+            <% end %>
+
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="paginationCenter paginationTransparent">
+              <ul class="pagination">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Previous</span>
+                  </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#">9</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">Next<i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+

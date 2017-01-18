@@ -27,9 +27,10 @@
 
 
     <!-- PAGE CONTENT -->
+    <% if @trip.images.length > 0 %>
     <section class="mainContentSection singlePackage">
       <div class="container">
-       <% if @trip.images.length > 0 %>
+
         <div class="row galleryCarousel">
           <div class="col-xs-12">
             <div id="package-carousel" class="carousel slide" data-ride="carousel">
@@ -70,10 +71,126 @@
           </div>
         </div>
       </div>
+      <% else %>
+      <div class="centered tripdummyimage">
+      <img src="/img/earth.png">
+      </div>
       <% end %>
 
 
+      <div class="row">
+          <div class="col-xs-12">
+            <div role="tabpanel" class="countryTabs">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                  <a href="#over-view" aria-controls="over-view" role="tab" data-toggle="tab">Description</a>
+                </li>
+                <li role="presentation">
+                  <a href="#tour-guide" aria-controls="tour-guide" role="tab" data-toggle="tab">Journal </a>
+                </li>
+                <li role="presentation">
+                  <a href="#location-map" aria-controls="location-map" role="tab" data-toggle="tab" onclick="showPhotos()">all pictures</a>
+                </li>
+                <li role="presentation">
+                  <a href="#tour-guide" aria-controls="tour-guide" role="tab" data-toggle="tab">Stops</a>
+                </li>
+                <li role="presentation">
+                  <a href="#tour-guide" aria-controls="edit-trip" role="tab" data-toggle="tab">Add a stop</a>
+                </li>
+                <li role="presentation">
+                  <a href="#tour-guide" aria-controls="tour-guide" role="tab" data-toggle="tab">add Tr@\/e|ers</a>
+                </li>
+                <li role="presentation">
+                  <a href="#edit-trip" aria-controls="edit-trip" role="tab" data-toggle="tab">edit trip</a>
+                </li>
+                 <li role="presentation">
+                  <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a>
+                </li>
+                <li class="pull-right">
+                  <ul class="list-inline">
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
+                  </ul>
+                </li>
+              </ul>
+            
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="over-view">
+                  <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                      <div class="commonInfo">
+                        <h2><%=  %></h2>
+                        <p><%=  %></p>
+                        
+                      </div>
+                    </div>
 
+                    <div class="col-sm-4 col-xs-12">
+                      <aside>
+                        <div class="well">
+                          <h3>benefits</h3>
+                          <ul class="list-unstyled">
+                            <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit</li>
+                            <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit Should Be Here</li>
+                            <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit Be Here</li>
+                            <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit Be</li>
+                          </ul>
+                          <a href="booking-1.html" class="btn buttonCustomPrimary">BOOK NOW</a>
+                        </div>
+                      </aside>
+                    </div>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="edit-trip">
+                  <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                      <div class="commonInfo">
+                        <div class="bookingForm">
+                           <%= form_tag "/trips/#{@trip.id}", method: :patch do  %>
+                            <!-- <form action="/trips" method="POST" role="form" class="form"> -->
+                              <div class="row">
+                               <div class="form-group col-sm-6 col-xs-12">
+                                <%= label_tag :name %>
+                                  <%= text_field_tag :name, nil, class: "form-control", value: @trip.name %>
+                            
+                                
+                                    <div>
+                                      <%= label_tag :description %>
+                                      <%= text_field_tag :description, nil, class: "form-control", value: @trip.description  %>
+                                    </div>
+                                    <div>
+                                      <%= label_tag :tagline %>
+                                      <%= text_field_tag :tagline, nil, class: "form-control", value: @trip.tagline  %>
+                                    </div>
+                               </div>
+                                    <%= submit_tag "Submit" %>
+                                  <% end %>
+                              </div>
+                           </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4 col-xs-12">
+                      <div class="well">
+                        <h3>benefits</h3>
+                        <ul class="list-unstyled">
+                          <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit</li>
+                          <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit Should Be Here</li>
+                          <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit Be Here</li>
+                          <li><i class="fa fa-check-square" aria-hidden="true"></i>Some Benefit Be</li>
+                        </ul>
+                        <a href="booking-1.html" class="btn buttonCustomPrimary">BOOK NOW</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
 
           
              
@@ -96,10 +213,11 @@
             <div class="buttonArea galleryBtnArea">
               <ul class="list-inline">
                 <li><a href="/trips/<%= "#{@trip.id}" %>/stop/new" class="btn buttonTransparent">Add a Stop!</a></li>
-                <li><a href="/trips/<%= "#{@trip.id}" %>/stop/new" class="btn buttonTransparent">Add a Tr@\/e|er!</a></li>
+                <li><a href="/trips/<%= "#{@trip.id}" %>/edit" class="btn buttonTransparent">Edit Trip!</a></li>
+                <li><a href="/trips/<%= "#{@trip.id}" %>/stop/new" class="btn buttonTransparent">Add Tr@\/e|ers!</a></li>
 
 
-                <li ><%= link_to 'Archive', "/trips/#{@trip.id}", class: "btn buttonTransparent", method: :patch %></li>
+                <li><%= link_to 'Archive', "/trips/#{@trip.id}/archive", class: "btn buttonTransparent", method: :patch %></li>
               </ul>
             </div>
           </div>
