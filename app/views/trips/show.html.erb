@@ -9,12 +9,12 @@
           <div class="titleTable">
             <div class="titleTableInner">
               <div class="pageTitleInfo">
-                <h1><%=@trip.name%><br>
+                <h1><%=@trip.name%></h1><br>
                 <% if @trip.status == "pending" %>
-                  <div class="count-down clearfix timersize">
-                    <div id="simple_timer"></div>
-                  </div>
-                   <% end %>
+                <div class="count-down clearfix timersize">
+                  <div id="simple_timer"></div>
+                </div>
+                <% end %>
                 <div class="under-border"></div>
               </div>
             </div>
@@ -34,12 +34,12 @@
       <div class="row galleryCarousel">
         <div class="col-xs-12">
           <div id="package-carousel" class="carousel slide" data-ride="carousel">
-         
+
             <ol class="carousel-indicators">
-            	<% counter = 0 %>
-            	<%@trip.images.each do |image| %>
-                <li  data-target="#package-carousel" data-slide-to="<%=counter%>" class="active"><img class="thumb" src="<%=image.url%>"></li>
-                <% counter = counter + 1 %>
+              <% counter = 0 %>
+              <%@trip.images.each do |image| %>
+              <li  data-target="#package-carousel" data-slide-to="<%=counter%>" class="active"><img class="thumb" src="<%=image.url%>"></li>
+              <% counter = counter + 1 %>
               <% end %>
             </ol>
 
@@ -50,11 +50,11 @@
               </div>
               <% counter = 0 %>
               <% @trip.images.each do |image| %>
-             		<% if counter != 0 %>
-		                <div class="item max-carousel">
-		                  <img alt="Slide" src="<%=image.url%>" class="max-carousel">
-		                </div>
-		            <% end %>
+              <% if counter != 0 %>
+              <div class="item max-carousel">
+                <img alt="Slide" src="<%=image.url%>" class="max-carousel">
+              </div>
+              <% end %>
               <% counter = counter + 1 %>
               <% end %>
 
@@ -67,15 +67,16 @@
     </div>
     <% elsif @trip.images.length == 1 %>
     <div class="centered tripdummyimage">
-    <img src="<%=@trip.images.first%>">
-    <% elsif @trip.images.length < 1 %>
-    <div class="centered tripdummyimage">
-    <img src="/img/earth.png">
-    </div>
-    <% end %>
+      <img src="<%=@trip.images.first%>">
+      <% elsif @trip.images.length < 1 %>
+      <div class="centered tripdummyimage">
+        <img src="/img/earth.png">
+      </div>
+    </section>
+  <% end %>
 
 
-    <div class="row">
+      <div class="row">
         <div class="col-xs-12">
           <div role="tabpanel" class="countryTabs">
             <!-- Nav tabs -->
@@ -101,12 +102,12 @@
               <li role="presentation">
                 <a href="#edit-trip" aria-controls="edit-trip" role="tab" data-toggle="tab">edit trip</a>
               </li>
-               <li role="presentation">
+              <li role="presentation">
                 <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a>
               </li>
               
             </ul>
-          
+
             <!-- Tab panes -->
             <div class="tab-content">
 
@@ -118,64 +119,64 @@
                       <p> Users on this trip: <% @trip.users.each do |user|%>
                         <%= link_to "#{user.first_name} #{user.last_name}, ", "/users/#{user.id}" %>  
                         <% end %></p> 
-                      <p> <%=@trip.description%> </p>
+                        <p> <%=@trip.description%> </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
 
-              <div role="tabpanel" class="tab-pane" id="add-stop">
-                <div class="row">
-                  <div class="col-sm-8 col-xs-12">
-                    <div class="commonInfo">           
-                      <div class="bookingForm">
-                        <div class="row">
-                          <div class="form-group col-sm-6 col-xs-12">
-                            <%= form_tag "/trips/#{params[:id]}/stops", method: :post do  %>
-                            <div>
-                              <%= label_tag :name %>
-                              <%= text_field_tag :name, nil, class: "form-control"  %>
+                <div role="tabpanel" class="tab-pane" id="add-stop">
+                  <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                      <div class="commonInfo">           
+                        <div class="bookingForm">
+                          <div class="row">
+                            <div class="form-group col-sm-6 col-xs-12">
+                              <%= form_tag "/trips/#{params[:id]}/stops", method: :post do  %>
+                              <div>
+                                <%= label_tag :name %>
+                                <%= text_field_tag :name, nil, class: "form-control"  %>
+                              </div>
+                              <div>
+                                <%= label_tag :address %>
+                                <%= text_field_tag :address, nil, class: "form-control"  %>
+                              </div>
+                              <div>
+                                <%= label_tag :description %>
+                                <%= text_field_tag :description, nil, class: "form-control"  %>
+                              </div>
+                              <div>
+                                <%= label_tag :tagline %>
+                                <%= text_field_tag :tagline, nil, class: "form-control"  %>
+                              </div>
+                              <div>
+                                <%= label_tag :Stop_number %>
+                                <%= text_field_tag :order, nil, class: "form-control"  %>
+                              </div>
+                              <a class="btn buttonTransparent"> <%= submit_tag "Submit" %> </a>
+                              <% end %> 
                             </div>
-                            <div>
-                              <%= label_tag :address %>
-                              <%= text_field_tag :address, nil, class: "form-control"  %>
-                            </div>
-                            <div>
-                              <%= label_tag :description %>
-                              <%= text_field_tag :description, nil, class: "form-control"  %>
-                            </div>
-                            <div>
-                              <%= label_tag :tagline %>
-                              <%= text_field_tag :tagline, nil, class: "form-control"  %>
-                            </div>
-                            <div>
-                              <%= label_tag :Stop_number %>
-                              <%= text_field_tag :order, nil, class: "form-control"  %>
-                            </div>
-                            <a class="btn buttonTransparent"> <%= submit_tag "Submit" %> </a>
-                            <% end %> 
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
 
 
-              <div role="tabpanel" class="tab-pane" id="stops">
-                <div class="row">
-                  <div class="col-sm-8 col-xs-12">
-                    <div class="commonInfo">
-                      <div class="row">
-                        <% @stops.each do |stop| %>
+                <div role="tabpanel" class="tab-pane" id="stops">
+                  <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                      <div class="commonInfo">
+                        <div class="row">
+                          <% @stops.each do |stop| %>
                           <div class="col-sm-4 col-xs-12">
                             <div class="relatedItem">
-                            <% if stop.images.length > 0 %>
-                            <%= image_tag stop.images.first.url %>
-                            <% else %>
+                              <% if stop.images.length > 0 %>
+                              <%= image_tag stop.images.first.url %>
+                              <% else %>
                               <img src="/img/earth.png" alt="related image">
                               <% end %>
                               <div class="maskingInfo">
@@ -185,83 +186,83 @@
                               </div>
                             </div>
                           </div>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div role="tabpanel" class="tab-pane" id="journal">
-                <div class="row">
-                  <div class="col-sm-8 col-xs-12">
-                    <div class="commonInfo">
-                      <div class="container">
-                        <div class="commentsArea">
-                          <% if current_user %>   
-                            <h1>Make a journal entry!</h1>
-                              <div>
-                                <%= form_tag "/trips/#{@trip.id}/journal", method: :post do %>
-                                  <div class="form-group comments">
-                                  <%= text_area_tag :entry, nil, placeholder: "How's your trip going??", class: "form-control" %>
-                                  </div>
-                                <%= hidden_field_tag :user_id, current_user.id %>
-                                <%= hidden_field_tag :blogable_type, "Trip" %>
-                                <%= hidden_field_tag :blogable_id, @trip.id %>
-                                <%= submit_tag  "Submit", class: "btn buttonCustomPrimary" %> 
-                                <% end %>
-                              </div>          
-                              <br>
-                              <br>
                           <% end %>
-
-                          <% @blogentries.each do |blog| %>
-                            <%#if this_comment.commentable_type == "Trip" %>
-                            <div class="media">
-                              <a class="media-left" href="#">
-                              <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
-                              <div class="media-body blog">
-                                <h4 class="media-heading">
-                                <%= blog.user.first_name %> <%= blog.user.last_name %></h4>
-                                <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span></h4>
-                                <p> <%= blog.entry %> </p>
-                                <button class="btn btn-link" type="button">Reply</button>
-                                <% if current_user.id == blog.user.id %>
-                                  <%= link_to 'Delete', "/journals/#{blog.id}", method: :get %>
-                                <% end %>
-                                <br>
-                                <br>
-                              </div>
-                              <br>
-                            <%# end %>
-                          <% end %>
-
-                                       
-                            </div>
-                            </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+
+
+
+                <div role="tabpanel" class="tab-pane" id="journal">
+                  <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                      <div class="commonInfo">
+                        <div class="container">
+                          <div class="commentsArea">
+                            <% if current_user %>   
+                            <h1>Make a journal entry!</h1>
+                            <div>
+                              <%= form_tag "/trips/#{@trip.id}/journal", method: :post do %>
+                              <div class="form-group comments">
+                                <%= text_area_tag :entry, nil, placeholder: "How's your trip going??", class: "form-control" %>
+                              </div>
+                              <%= hidden_field_tag :user_id, current_user.id %>
+                              <%= hidden_field_tag :blogable_type, "Trip" %>
+                              <%= hidden_field_tag :blogable_id, @trip.id %>
+                              <%= submit_tag  "Submit", class: "btn buttonCustomPrimary" %> 
+                              <% end %>
+                            </div>          
+                            <br>
+                            <br>
+                            <% end %>
+
+                            <% @blogentries.each do |blog| %>
+                            <%#if this_comment.commentable_type == "Trip" %>
+                            <div class="media">
+                              <a class="media-left" href="#">
+                                <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
+                                <div class="media-body blog">
+                                  <h4 class="media-heading">
+                                    <%= blog.user.first_name %> <%= blog.user.last_name %></h4>
+                                    <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span></h4>
+                                    <p> <%= blog.entry %> </p>
+                                    <button class="btn btn-link" type="button">Reply</button>
+                                    <% if current_user.id == blog.user.id %>
+                                    <%= link_to 'Delete', "/journals/#{blog.id}", method: :get %>
+                                    <% end %>
+                                    <br>
+                                    <br>
+                                </div>
+                                  <br>
+                                  <%# end %>
+                                  </div>
+                            <% end %>
+
+
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
 
 
 
-              <div role="tabpanel" class="tab-pane" id="edit-trip">
-                <div class="row">
-                  <div class="col-sm-8 col-xs-12">
-                    <div class="commonInfo">
-                      <div class="bookingForm">
-                         <%= form_tag "/trips/#{@trip.id}", method: :patch do  %>
-                          <!-- <form action="/trips" method="POST" role="form" class="form"> -->
-                            <div class="row">
+                    <div role="tabpanel" class="tab-pane" id="edit-trip">
+                      <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                          <div class="commonInfo">
+                            <div class="bookingForm">
+                             <%= form_tag "/trips/#{@trip.id}", method: :patch do  %>
+                             <!-- <form action="/trips" method="POST" role="form" class="form"> -->
+                             <div class="row">
                               <div class="form-group col-sm-6 col-xs-12">
                                 <%= label_tag :name %>
-                                  <%= text_field_tag :name, nil, class: "form-control", value: @trip.name %>
+                                <%= text_field_tag :name, nil, class: "form-control", value: @trip.name %>
                                 <div>
                                   <%= label_tag :description %>
                                   <%= text_field_tag :description, nil, class: "form-control", value: @trip.description  %>
@@ -270,75 +271,74 @@
                                   <%= label_tag :tagline %>
                                   <%= text_field_tag :tagline, nil, class: "form-control", value: @trip.tagline  %>
                                 </div>
-                                
+
                                 <%= submit_tag "Submit" %>
                               </div>
-                                <% end %>
+                              <% end %>
                             </div>
-                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-            </div>
-
-
-
-
-
-
-
-
-
-        </div>
-        <h3>My Google Maps Demo</h3>
-    <div id="map"></div>
-    
-    
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap"></script>
-
-    <script type="text/javascript">
-      var stops = [
-      <% counter = 1 %>
-        <% @trip.stops.each do |stop| %>
-        ["<a href='/stops/<%=stop.id%>'> <%=stop.name%> </a>" , <%=stop.latitude%>, <%=stop.longitude%>, <%=counter%>],
-        <% counter = counter + 1 %>
+        <% stopcoordinates = [] %>
+        <% @trip.stops.each do |stop|%>
+        <% if stop.latitude %>
+        <% stopcoordinates << stop %>
         <% end %>
-      ];
+        <% end %>
 
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
-        center: new google.maps.LatLng(<%=@trip.stops.first.latitude%>, <%=@trip.stops.first.longitude%>),
+        <% if stopcoordinates.length > 0 %>
+        <div class="mapdiv">
+          <div id="map">
+
+
+          <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap"></script>
+
+          <script type="text/javascript">
+            var stops = [
+            <% counter = 1 %>
+            <% stopcoordinates.each do |stop| %>
+            <% if stop.latitude !=nil %>
+            ["<a href='/stops/<%=stop.id%>'> <%=stop.name%> </a>" , <%=stop.latitude%>, <%=stop.longitude%>, <%=counter%>],
+            <% counter = counter + 1 %>
+            <% end %>
+            <% end %>
+            ];
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 10,
+              center: new google.maps.LatLng(stops[0][1], stops[0][2]),
+        // stops[i][1], stops[i][2]
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
 
-      var infowindow = new google.maps.InfoWindow();
+            var infowindow = new google.maps.InfoWindow();
 
-      var marker, i;
+            var marker, i;
 
-      for (i = 0; i < stops.length; i++) {  
-        marker = new google.maps.Marker({
-          position: new google.maps.LatLng(stops[i][1], stops[i][2]),
-          map: map
-        });
+            for (i = 0; i < stops.length; i++) {  
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(stops[i][1], stops[i][2]),
+                map: map
+              });
 
-        google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
-          return function() {
-            infowindow.setContent(stops[i][0]);
-            infowindow.open(map, marker);
-          }
-        })(marker, i));
-      }
-    </script>
-    
-
-   </section>
-
-</div>
-
-
+              google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+                return function() {
+                  infowindow.setContent(stops[i][0]);
+                  infowindow.open(map, marker);
+                }
+              })(marker, i));
+            }
+          </script>
+          </div><!-- map div -->
+        <% end %>    
+      </section>
+    </div>
+</div> <!-- main wrapper -->
 
