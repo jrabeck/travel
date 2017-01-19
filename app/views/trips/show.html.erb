@@ -26,6 +26,8 @@
 
 
 
+
+
   <!-- PAGE CONTENT -->
   <% if @trip.images.length > 0 %>
   <section class="mainContentSection singlePackage">
@@ -33,7 +35,7 @@
 
       <div class="row galleryCarousel">
         <div class="col-xs-12">
-          <div id="package-carousel" class="carousel slide" data-ride="carousel">
+          <div id="package-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
             <ol class="carousel-indicators">
               <% counter = 0 %>
@@ -85,6 +87,9 @@
                 <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a>
               </li>
               <li role="presentation">
+                <a href="#maptab" aria-controls="maptab" role="tab" data-toggle="tab">map</a>
+              </li>
+              <li role="presentation">
                 <a href="#journal" aria-controls="journal" role="tab" data-toggle="tab">Journal </a>
               </li>
               <li role="presentation">
@@ -93,6 +98,8 @@
               <li role="presentation">
                 <a href="#stops" aria-controls="stops" role="tab" data-toggle="tab" onclick="showPhotos()">stops</a>
               </li>
+              <% @admins.each do |admin| %>
+              <% if admin == current_user.id %>
               <li role="presentation">
                 <a href="#add-stop" aria-controls="add-stop" role="tab" data-toggle="tab">Add a stop</a>
               </li>
@@ -105,6 +112,8 @@
               <li role="presentation">
                 <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a>
               </li>
+              <% end %>
+              <% end %>
               
             </ul>
 
@@ -120,11 +129,41 @@
                         <%= link_to "#{user.first_name} #{user.last_name}, ", "/users/#{user.id}" %>  
                         <% end %></p> 
                         <p> <%=@trip.description%> </p>
+
                       </div>
                     </div>
                   </div>
                 </div>
 
+
+<!-- ############################################################################# -->
+
+                <div role="tabpanel" class="tab-pane" id="maptab">
+                  <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                      <div class="commonInfo">
+                        <% stopcoordinates = [] %>
+                        <% @trip.stops.each do |stop|%>
+                        <% if stop.latitude %>
+                        <% stopcoordinates << stop %>
+                        <% end %>
+                        <% end %>
+                        <% if stopcoordinates.length > 0 %>
+                      <div class="mapdiv">
+                         <div id="map">  
+                           <div class="row">
+                          </div>
+                        </div>
+                      </div>
+                      <% else %>
+                      <h4> Sorry! This trip doesn't have any stops with valid locations. </h4>
+                        <% end %>   
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+<!-- ############################################################################# -->
 
                 <div role="tabpanel" class="tab-pane" id="add-stop">
                   <div class="row">
@@ -286,59 +325,59 @@
             </div>
           </div>
         </div>
-        <% stopcoordinates = [] %>
-        <% @trip.stops.each do |stop|%>
-        <% if stop.latitude %>
-        <% stopcoordinates << stop %>
-        <% end %>
-        <% end %>
-
-        <% if stopcoordinates.length > 0 %>
-        <div class="mapdiv">
-          <div id="map">
-
-
-          <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap"></script>
-
-          <script type="text/javascript">
-            var stops = [
-            <% counter = 1 %>
-            <% stopcoordinates.each do |stop| %>
-            <% if stop.latitude !=nil %>
-            ["<a href='/stops/<%=stop.id%>'> <%=stop.name%> </a>" , <%=stop.latitude%>, <%=stop.longitude%>, <%=counter%>],
-            <% counter = counter + 1 %>
-            <% end %>
-            <% end %>
-            ];
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 10,
-              center: new google.maps.LatLng(stops[0][1], stops[0][2]),
-        // stops[i][1], stops[i][2]
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      });
-
-            var infowindow = new google.maps.InfoWindow();
-
-            var marker, i;
-
-            for (i = 0; i < stops.length; i++) {  
-              marker = new google.maps.Marker({
-                position: new google.maps.LatLng(stops[i][1], stops[i][2]),
-                map: map
-              });
-
-              google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
-                return function() {
-                  infowindow.setContent(stops[i][0]);
-                  infowindow.open(map, marker);
-                }
-              })(marker, i));
-            }
-          </script>
-          </div><!-- map div -->
-        <% end %>    
       </section>
     </div>
 </div> <!-- main wrapper -->
 
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap">
+</script>
+<script type="text/javascript">
+  var stops = [
+  <% counter = 1 %>
+  <% stopcoordinates.each do |stop| %>
+  <% if stop.latitude !=nil %>
+  ["<a href='/stops/<%=stop.id%>'> <%=stop.name%> </a>" , <%=stop.latitude%>, <%=stop.longitude%>, <%=counter%>],
+  <% counter = counter + 1 %>
+  <% end %>
+  <% end %>
+  ];
+
+  console.log(stops[0][1], stops[0][2]);
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    center: new google.maps.LatLng(stops[0][1], stops[0][2]),
+              // stops[i][1], stops[i][2]
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+  var infowindow = new google.maps.InfoWindow();
+
+  var marker, i;
+
+  for (i = 0; i < stops.length; i++) {  
+    console.log(stops[i][1], stops[i][2]);
+    marker = new google.maps.Marker({
+      position: new google.maps.LatLng(stops[i][1], stops[i][2]),
+      map: map
+    });
+
+    google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+      return function() {
+        infowindow.setContent(stops[i][0]);
+        infowindow.open(map, marker);
+      }
+    })(marker, i));
+  }
+
+
+  $('a[href="#maptab"]').on('shown.bs.tab', function(e)
+    {
+        var newmapcenter = map.getCenter(); 
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(newmapcenter);
+    });
+
+</script>

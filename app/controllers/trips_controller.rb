@@ -39,6 +39,11 @@ class TripsController < ApplicationController
     @trip = Trip.find_by(id: params[:id])
     @comments = Comment.where(commentable_id: params[:id], commentable_type: "Trip")
     @blogentries = Blogentry.where(blogable_id: params[:id], blogable_type: "Trip")
+    @admins = []
+    Usertrip.where(trip_id: params[:id]).where(admin: true).each do |admin|
+      @admins << admin.user_id
+    end
+
   end
 
   def adduser

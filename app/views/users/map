@@ -1,0 +1,52 @@
+        <% stopcoordinates = [] %>
+        <% @trip.stops.each do |stop|%>
+        <% if stop.latitude %>
+        <% stopcoordinates << stop %>
+        <% end %>
+        <% end %>
+
+        <% if stopcoordinates.length > 0 %>
+        <div class="mapdiv">
+          <div id="map">
+
+
+          <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap"></script>
+
+          <script type="text/javascript">
+            var stops = [
+            <% counter = 1 %>
+            <% stopcoordinates.each do |stop| %>
+            <% if stop.latitude !=nil %>
+            ["<a href='/stops/<%=stop.id%>'> <%=stop.name%> </a>" , <%=stop.latitude%>, <%=stop.longitude%>, <%=counter%>],
+            <% counter = counter + 1 %>
+            <% end %>
+            <% end %>
+            ];
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 10,
+              center: new google.maps.LatLng(stops[0][1], stops[0][2]),
+        // stops[i][1], stops[i][2]
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker, i;
+
+            for (i = 0; i < stops.length; i++) {  
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(stops[i][1], stops[i][2]),
+                map: map
+              });
+
+              google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+                return function() {
+                  infowindow.setContent(stops[i][0]);
+                  infowindow.open(map, marker);
+                }
+              })(marker, i));
+            }
+          </script>
+          </div><!-- map div -->
+        <% end %>    
