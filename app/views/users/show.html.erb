@@ -57,12 +57,16 @@
               <li class="active"><a href="#" data-filter="*">all stops</a></li>
               <% @user.trips.each do |trip| %>
                 <% if trip.archived == false || trip.archived == nil %>
-                 <li><a href="#" data-filter=".trip<%=trip.id%>"><%=trip.name%></a></li>
+                 <li><a href="/trips/<%=trip.id%>" data-filter=".trip<%=trip.id%>"><%=trip.name%></a></li>
                 <% end %>
               <%end%>
 
             </div>
           </div>
+        </div>
+        <div class="row isotopeContainer">
+
+
         </div>
         <div class="row isotopeContainer" id="container">
           <% @user.trips.each do |trip| %>
@@ -71,17 +75,16 @@
 		            <article class="">
 		              <figure>
 		                <img src="/img/home/packages/packages-1.jpg" alt="">
-		                <h4><%=stop.name%></h4>
-		                <div class="overlay-background">
-		                  <div class="inner"></div>
-		                </div>
-		                <div class="overlay">
-		                  <a class="fancybox-pop" rel="portfolio-1" href="/img/home/packages/packages-1.jpg">
+		                <a rel="portfolio-1" href="http://www.google.com"><h4><%=stop.name%></h4></a>
+	                  <div class="overlay-background">
+	                    <div class="inner"></div>
+	                  </div>
+	                  <div class="overlay">
+		                  
 		                    <span class="overlayInfo">
-		                      <h5>from <span>$1000</span></h5>
+		                  
 		                      <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
 		                    </span>
-		                  </a>
 		                </div>
 		              </figure>
 		            </article>
@@ -92,11 +95,6 @@
       </div>
     </section>
 
-    <!-- FOOTER INNER -->
-    <footer>
-     
-    </footer>
-    
   </div>
 
   

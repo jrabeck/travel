@@ -128,24 +128,19 @@
                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">friends</a>
 
                 <ul class="dropdown-menu dropdown-menu-right">
-
-                    <% current_user.following.each do |follower| %>
-
-                        <li class="dropdown dropdown-submenu"><a href="/users/<%=follower.id%>"><%=follower.first_name%> <%=follower.last_name %> </a>
-                        
+                  <% current_user.following.each do |follower| %>
+                    <li class="dropdown dropdown-submenu"><a href="/users/<%=follower.id%>"><%=follower.first_name%> <%=follower.last_name %> </a>
+                      <% if follower.trips.length > 0  %>
                         <% follower.trips.each do |trip| %>
-                          <% end %>
-                          <% if follower.trips.length > 0  %>
                             <ul class="dropdown-menu">
                             <% follower.trips.each do |trip| %>
-                              <% if current_user.trips.exclude?(trip) %>
-                                 <li class="dropdown dropdown-submenu"><a href="/trips/<%=trip.id%>"><%=trip.name%></a></li>
-                              <% end %>
+                                 <li class="dropdown dropdown-submenu"><a href="/trips/<%=trip.id%>"><%=trip.name%></a></li>    
                             <% end %>
                             </ul>
                           <% end %>
-                        </li>
-                    <% end %>                
+                           <% end %>
+                    </li>
+                  <% end %>                
                 </ul>
               </li>
 

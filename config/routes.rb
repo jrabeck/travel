@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   get "/trips/:id/edit", to: "trips#edit"
   patch "/trips/:id", to: "trips#update"
   get "/trips/:id/archive", to: "trips#archive"
+  post "/trips/:id/journal", to: "blogentries#create"
+  get "/journals/:id", to: "blogentries#destroy"
 
 
 

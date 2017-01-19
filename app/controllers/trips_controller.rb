@@ -35,10 +35,10 @@ class TripsController < ApplicationController
   
 
   def show
-    
     @stops = Trip.find_by(id: params[:id]).stops
     @trip = Trip.find_by(id: params[:id])
     @comments = Comment.where(commentable_id: params[:id], commentable_type: "Trip")
+    @blogentries = Blogentry.where(blogable_id: params[:id], blogable_type: "Trip")
   end
 
   def adduser

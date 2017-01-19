@@ -39,13 +39,13 @@
 
                      <a class="btn buttonTransparent" href="/trips/new"> Add a Trip! </a>
 
-                    <form action="/users/traveling" method="post">
+                <!--     <form action="/users/traveling" method="post">
                         <button name="traveling_button" >
-                        <% if current_user.traveling == true %>
+                        <#% if current_user.traveling == true %>
                         I'm done traveling!
-                        <% elsif current_user.traveling == false %>
+                        <#% elsif current_user.traveling == false %>
                         I'm traveling now!
-                        <% end %>
+                        <#% end %>
                           
                         </button>
                         
@@ -53,7 +53,7 @@
 
                     
                      <a class="btn buttonTransparent" value="traveling"  href="/users/traveling"> I'm Tr@\/e|ing now! </a>
-
+ -->
 
 
                   </div>
@@ -101,10 +101,10 @@
                                 <ul class="list-inline ">
                                 <% trip.users.each do |user|%>
                                     <% if (user.id != current_user.id) && (user.images.length > 0) %>
-                                          <li><a href="/users/<%=user.id%>" class="sidebar-link">
+                                          <li class="userpic"><a href="/users/<%=user.id%>" class="sidebar-link">
                                           <img src="<%=user.images.first.url%>" alt="Instagram-image"></a></li>
                                     <% elsif user.id != current_user.id %>
-                                          <li><a class="btn buttonTransparent smalltext sidebar-link" href="/users/<%=user.id%>">
+                                          <li class="userpic"><a class="btn buttonTransparent smalltext sidebar-link" href="/users/<%=user.id%>">
                                           <%= user.first_name %> <br/> 
                                           <div class="centered"> 
                                           <%= user.last_name%>
@@ -188,11 +188,11 @@
             </aside>
           </div>
 
-          <% if current_user.traveling %>
+<!--           <%# if current_user.traveling %>
             <h2> How's your trip going?? </h2>
             <br>
 
-          <% end %> 
+          <%# end %>  -->
 
           <div class="col-sm-9 col-xs-12 whitediv">
             
