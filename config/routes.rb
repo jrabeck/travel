@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   get '/trips/:id', to: 'trips#show'
   get 'stops/comments/:id', to: 'comments#destroy'
   delete '/stops/comments/:id', to: 'comments#destroy'
-    get '/comments/:id', to: 'comments#destroy'
+  get '/comments/:id', to: 'comments#destroy'
+  post "/trips/:id/addtravelers", to: 'user_trips#new'
   
 
   # post '/login', to: 'sessions#create'

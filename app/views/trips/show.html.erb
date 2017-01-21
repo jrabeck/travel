@@ -84,34 +84,33 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active">
-                <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a>
+                <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Info</a>
               </li>
               <li role="presentation">
                 <a href="#maptab" aria-controls="maptab" role="tab" data-toggle="tab">map</a>
               </li>
               <li role="presentation">
-                <a href="#journal" aria-controls="journal" role="tab" data-toggle="tab">Journal </a>
-              </li>
-              <li role="presentation">
-                <a href="#location-map" aria-controls="location-map" role="tab" data-toggle="tab" onclick="showPhotos()">all pictures</a>
+                <a href="#location-map" aria-controls="location-map" role="tab" data-toggle="tab" onclick="showPhotos()">pictures</a>
               </li>
               <li role="presentation">
                 <a href="#stops" aria-controls="stops" role="tab" data-toggle="tab" onclick="showPhotos()">stops</a>
               </li>
-              <% @admins.each do |admin| %>
-              <% if admin == current_user.id %>
-              <li role="presentation">
-                <a href="#add-stop" aria-controls="add-stop" role="tab" data-toggle="tab">Add a stop</a>
-              </li>
-              <li role="presentation">
-                <a href="#tour-guide" aria-controls="tour-guide" role="tab" data-toggle="tab">add Tr@\/e|ers</a>
-              </li>
-              <li role="presentation">
-                <a href="#edit-trip" aria-controls="edit-trip" role="tab" data-toggle="tab">edit trip</a>
-              </li>
-              <li role="presentation">
-                <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a>
-              </li>
+              <% @usertrips.each do |usertrip| %>
+              <% if usertrip == current_user.id %>
+              <li role="presentation" class="dropdown col-md-1 col-lg-1 col-sm-1">
+                <button class="btn buttonTransparent dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Edit tools
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#add-stop" aria-controls="add-stop" role="tab" data-toggle="tab">Add a Stop</a></li>
+                  <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="#journal" aria-controls="journal" role="tab" data-toggle="tab"> Write in Journal </a>
+                  </li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#add-travelers" aria-controls="add-travelers" role="tab" data-toggle="tab">Add Tr@\/e|ers</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#edit-trip" aria-controls="edit-trip" role="tab" data-toggle="tab">Edit Trip</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1"  aria-controls="tour-guide" role="tab" data-toggle="tab"> <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a></li>
+                </ul>
+              </div>
+              
               <% end %>
               <% end %>
               
@@ -124,12 +123,13 @@
                 <div class="row">
                   <div class="col-sm-8 col-xs-12">
                     <div class="commonInfo">
+                      <div class="container">
                       <h2><%=@trip.tagline%> </h2>
                       <p> Users on this trip: <% @trip.users.each do |user|%>
                         <%= link_to "#{user.first_name} #{user.last_name}, ", "/users/#{user.id}" %>  
                         <% end %></p> 
                         <p> <%=@trip.description%> </p>
-
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -156,8 +156,8 @@
                         </div>
                       </div>
                       <% else %>
-                      <h4> Sorry! This trip doesn't have any stops with valid locations. </h4>
-                        <% end %>   
+                      <div class="container"> <h4> Sorry! This trip doesn't have any stops with valid locations. </h4> </div>
+                      <% end %>   
                     </div>
                   </div>
                 </div>
@@ -207,14 +207,14 @@
 
                 <div role="tabpanel" class="tab-pane" id="stops">
                   <div class="row">
-                    <div class="col-sm-8 col-xs-12">
+                    <div class="col-md-12 col-lg-12 col-sm-8 col-xs-12">
                       <div class="commonInfo">
                         <div class="row">
                           <% @stops.each do |stop| %>
-                          <div class="col-sm-4 col-xs-12">
+                          <div class="col-sm-4 col-xs-12 col-md-3 col-lg-3">
                             <div class="relatedItem">
                               <% if stop.images.length > 0 %>
-                              <%= image_tag stop.images.first.url %>
+                              <%= image_tag stop.images.first.url, :class => "image-responsive" %>
                               <% else %>
                               <img src="/img/earth.png" alt="related image">
                               <% end %>
@@ -233,6 +233,48 @@
                 </div>
 
 
+                <div role="tabpanel" class="tab-pane" id="add-travelers">
+                  <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-8 col-xs-12">
+                      <div class="commonInfo">
+                       <div class="bookingForm">
+                       <%= form_tag "/trips/#{@trip.id}/addtravelers", method: :post do  %>
+                         <!-- <form action="/trips" method="POST" role="form" class="form"> -->
+                         <div class="row">
+                          <div class="form-group col-sm-6 col-xs-12">
+
+                            <div>
+                              <%= label_tag :"Attendee Email" %>
+                              <%= text_field_tag :attendee1_email, nil, class: "form-control"  %>
+                            </div>
+                            <div>
+                              <%= label_tag :"Attendee Email" %>
+                              <%= text_field_tag :attendee2_email, nil, class: "form-control"  %>
+                            </div>
+                            <div>
+                              <%= label_tag :"Attendee Email" %>
+                              <%= text_field_tag :attendee3_email, nil, class: "form-control"  %>
+                            </div>
+                            <div>
+                              <%= label_tag :"Attendee Email" %>
+                              <%= text_field_tag :attendee4_email, nil, class: "form-control"  %>
+                            </div>
+                            <div>
+                              <%= label_tag "Attendee Email" %>
+                              <%= text_field_tag :attendee5_email, nil, class: "form-control"  %>
+                            </div>
+                          </div>
+                          <%= submit_tag "Submit" %>
+                          <% end %>
+                        </form>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
                 <div role="tabpanel" class="tab-pane" id="journal">
                   <div class="row">
@@ -240,22 +282,26 @@
                       <div class="commonInfo">
                         <div class="container">
                           <div class="commentsArea">
-                            <% if current_user %>   
-                            <h1>Make a journal entry!</h1>
-                            <div>
-                              <%= form_tag "/trips/#{@trip.id}/journal", method: :post do %>
-                              <div class="form-group comments">
-                                <%= text_area_tag :entry, nil, placeholder: "How's your trip going??", class: "form-control" %>
-                              </div>
-                              <%= hidden_field_tag :user_id, current_user.id %>
-                              <%= hidden_field_tag :blogable_type, "Trip" %>
-                              <%= hidden_field_tag :blogable_id, @trip.id %>
-                              <%= submit_tag  "Submit", class: "btn buttonCustomPrimary" %> 
+                           
+                              <% if @usertrips.include?(current_user.id) %>
+                              <h1>Make a journal entry!</h1>
+                              <div>
+                                <%= form_tag "/trips/#{@trip.id}/journal", method: :post do %>
+                                <div class="form-group comments">
+                                  <%= text_area_tag :entry, nil, placeholder: "How's your trip going??", class: "form-control" %>
+                                </div>
+                                <%= hidden_field_tag :user_id, current_user.id %>
+                                <%= hidden_field_tag :blogable_type, "Trip" %>
+                                <%= hidden_field_tag :blogable_id, @trip.id %>
+                                <%= submit_tag  "Submit", class: "btn buttonCustomPrimary" %> 
+                                <% end %>
+                              </div>          
+                              <br>
+                              <br>
+                              <% else %>
+                              <h4> Sorry! No Journal entries have been made yet. </h4>
                               <% end %>
-                            </div>          
-                            <br>
-                            <br>
-                            <% end %>
+                           
 
                             <% @blogentries.each do |blog| %>
                             <%#if this_comment.commentable_type == "Trip" %>
@@ -273,20 +319,20 @@
                                     <% end %>
                                     <br>
                                     <br>
-                                </div>
+                                  </div>
                                   <br>
                                   <%# end %>
-                                  </div>
-                            <% end %>
+                                </div>
+                                <% end %>
 
 
-                            
+
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
 
 
 
@@ -310,11 +356,19 @@
                                   <%= label_tag :tagline %>
                                   <%= text_field_tag :tagline, nil, class: "form-control", value: @trip.tagline  %>
                                 </div>
+                                <%= label_tag "Start Date" %>
+                                <div class="bookingDrop">
+                                  <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'}, value: @trip.start_date %>
+                                </div>
+                                <%= label_tag "End Date" %>
+                                <div class="bookingDrop">
+                                  <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'} %>
+                                </div>
+                                </div>
 
-                                <%= submit_tag "Submit" %>
-                              </div>
-                              <% end %>
+                              <%= submit_tag "Submit" %>
                             </div>
+                            <% end %>
                           </div>
                         </div>
                       </div>
@@ -325,8 +379,9 @@
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+  </div>
 </div> <!-- main wrapper -->
 
 

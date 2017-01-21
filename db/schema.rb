@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118034645) do
+ActiveRecord::Schema.define(version: 20170121025559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 20170118034645) do
     t.string   "tagline"
     t.boolean  "active"
     t.boolean  "archived"
+    t.date     "start_time"
+    t.date     "end_time"
   end
 
   create_table "trips", force: :cascade do |t|

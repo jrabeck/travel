@@ -1,0 +1,73 @@
+<div class="main-wrapper">
+
+
+  <!-- PAGE TITLE -->
+  <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg8.jpg)">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="titleTable">
+            <div class="titleTableInner">
+              <div class="pageTitleInfo">
+                <h1><%= @user.first_name%>  <%=@user.last_name%> </h1> 
+                <h5> <%=@user.bio%> </h5>
+                <div class="under-border"></div>
+                <br> 
+                <% if @user.id != current_user.id %>
+                <!-- Follow/Unfollow Button -->
+                <% if current_user.following.pluck(:id).include?(@user.id) %>
+                <h5 class="btn buttonTransparent">
+
+                  <%= link_to "UnFollow", "/users/unfollow/#{@user.id}", method: :get %></h5>
+
+                  <% else %>
+                  <h5 class="btn buttonTransparent"><%= link_to "Follow", "/users/follow/#{@user.id}" %></h5>
+                  <% end %>
+               
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHITE SECTION FILTER-->
+
+  <% @user.trips.each do |trip| %>
+    <div class="col-sm-4 col-xs-12 usertrip">    
+      <div class="teamMember">
+        <% if trip.images.length > 0 %>
+          <img class="image-responsive" src="<%=trip.images.first.url%>">
+          <% else %>
+          <img class="image-responsive" src="/img/earth.png" alt="">
+        <% end %>
+        
+        <div class="memberName">
+            <a href="www.google.com">
+            <h2><%=trip.name%></h2>
+            <% if trip.tagline %>
+            <h3>"<%=trip.tagline%>"</h3>
+            <p><%=trip.description%></p>
+            </a>
+            <% end %>
+        </div>
+          
+        <div class="maskingArea">
+
+          <ul class="list-inline">
+            <% if trip.stops.length > 0 %>
+            <% trip.stops.each do |stop| %>
+            <li><a href="/stops/<%=stop.id%>"><img src="http://www.gamersglobal.de/sites/gamersglobal.de/files/galerie/2105/0018-nsmb2art18.jpg"></a></li>
+            <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+
+
+</div>

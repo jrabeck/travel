@@ -1,103 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
-  <!-- SITE TITTLE -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= @user.first_name %>'s Page</title>
-  
-  
-</head>
-
-<body>
   <div class="main-wrapper">
 
-    
-    <!-- PAGE TITLE -->
-    <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg8.jpg);">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="titleTable">
-              <div class="titleTableInner">
-                <div class="pageTitleInfo">
-                  <h1><%= @user.first_name%>  <%=@user.last_name%> </h2> 
-                  <h5> <%=@user.bio%> </h5>
-                  <div class="under-border"></div>
-                  <br> 
-                  <% if @user.id != current_user.id %>
-											<!-- Follow/Unfollow Button -->
-											<% if current_user.following.pluck(:id).include?(@user.id) %>
-												<h5 class="btn buttonTransparent">
+    <!-- HEADER -->
+    <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg8.jpg)">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="titleTable">
+            <div class="titleTableInner">
+              <div class="pageTitleInfo">
+                <h1><%= @user.first_name%>  <%=@user.last_name%> </h1> 
+                <h5> <%=@user.bio%> </h5>
+                <div class="under-border"></div>
+                <br> 
+                <% if @user.id != current_user.id %>
+                <!-- Follow/Unfollow Button -->
+                <% if current_user.following.pluck(:id).include?(@user.id) %>
+                <h5 class="btn buttonTransparent">
 
-                        <%= link_to "UnFollow", "/users/unfollow/#{@user.id}", method: :get %></h5>
+                  <%= link_to "UnFollow", "/users/unfollow/#{@user.id}", method: :get %></h5>
 
-												<% else %>
-												<h5 class="btn buttonTransparent"><%= link_to "Follow", "/users/follow/#{@user.id}" %></h5>
-											<% end %>
-											</h1> 
+                  <% else %>
+                  <h5 class="btn buttonTransparent"><%= link_to "Follow", "/users/follow/#{@user.id}" %></h5>
                   <% end %>
-                </div>
+               
+                <% end %>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
     <!-- WHITE SECTION FILTER-->
     <section class="mainContentSection">
       <div class="container">
+	      
+	      	<div class="usershowimage"">
+	      		<img class="usershowimage" src="<%=@user.images.first.url%>">
+	      	</div>
+	     
         <div class="row">
           <div class="col-xs-12">
             <div class="filter-container isotopeFilters">
               <ul class="list-inline filter">
-              <li class="active"><a href="#" data-filter="*">all stops</a></li>
-              <% @user.trips.each do |trip| %>
-                <% if trip.archived == false || trip.archived == nil %>
-                 <li><a href="/trips/<%=trip.id%>" data-filter=".trip<%=trip.id%>"><%=trip.name%></a></li>
-                <% end %>
-              <%end%>
-
+                <li class="active"><a id="all-places-button" href="#" data-filter=".all">all stops</a></li>
+	              <% @user.trips.each do |trip| %>
+	              <li><a href="#" data-filter=".<%=trip.id%>"><%=trip.name%></a></li>
+	              <% end %>
+              </ul>
             </div>
           </div>
         </div>
-        <div class="row isotopeContainer">
-
-
-        </div>
         <div class="row isotopeContainer" id="container">
-          <% @user.trips.each do |trip| %>
-          	<% trip.stops.each do |stop| %>
-		          <div class="col-sm-3 isotopeSelector trip<%=trip.id%>">
+
+        <% @user.trips.each do |trip| %>
+
+        		  <div class="col-sm-3 isotopeSelector <%=trip.id%>">
 		            <article class="">
 		              <figure>
-		                <img src="/img/home/packages/packages-1.jpg" alt="">
-		                <a rel="portfolio-1" href="http://www.google.com"><h4><a href="<%=stop.name%></h4></a>
-	                  <div class="overlay-background">
-	                    <div class="inner"></div>
-	                  </div>
-	                  <div class="overlay">
-		                  
+		              	<% if trip.images.length > 0 %>
+		                <img src="<%=trip.images.first.url%>" alt="">
+		                <% else %>
+		                <img src="/img/earth.png" alt="">
+		                <% end %>
+		                <h4>Go to <%=trip.name%>!</h4>
+		                <div class="overlay-background">
+		                  <div class="inner"></div>
+		                </div>
+		                <div class="overlay">
+		                  <a class="fancybox-pop" rel="portfolio-1" href="/trips/<%=trip.id%>">
 		                    <span class="overlayInfo">
-		                  
+		                      <h5>from <span>$1000</span></h5>
 		                      <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
 		                    </span>
+		                  </a>
 		                </div>
 		              </figure>
 		            </article>
 		          </div>
-          	<%end%>
-          <%end%>
+
+        	<% trip.stops.each do |stop| %>
+		          <div class="col-sm-3 isotopeSelector <%=trip.id%> all">
+		            <article class="">
+		              <figure>
+		              	<% if stop.images.length > 0 %>
+		                <img src="<%=stop.images.first.url%>" alt="">
+		                <% else %>
+		                <img src="/img/earth.png" alt="">
+		                <% end %>
+		                <h4><%=stop.name%></h4>
+		                <div class="overlay-background">
+		                  <div class="inner"></div>
+		                </div>
+		                <div class="overlay">
+		                  <a class="fancybox-pop" rel="portfolio-1" href="/stops/<%=stop.id%>">
+		                    <span class="overlayInfo">
+		                      <h5><%=stop.tagline%> </h5> <!-- anything in span tags here will be orange -->
+		                      <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
+		                    </span>
+		                  </a>
+		                </div>
+		              </figure>
+		            </article>
+		          </div>
+		      <% end %>
+		    <% end %>
         </div>
       </div>
     </section>
 
+
   </div>
 
-  
-</body>
 
-</html>
+
+  <script type="text/javascript">
+
+
+		 {
+	    setTimeout(
+	    function() 
+	    {
+				$( "#all-places-button" ).click();
+	    }, 0.1);
+
+		};
+  </script>

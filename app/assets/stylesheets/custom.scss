@@ -65,12 +65,12 @@ h2.editButtonText:hover img.editButton{
 }
 
 .relatedItem {
-	height: 185px !important;
-	width: 200px !important;
+
 	text-align: center;
+	margin: 13px auto;
 		img {
 		height: 100%;
-		min-width: 100%;
+
 		min-height:100%;
 		text-align: center;
 		width: auto;
@@ -163,8 +163,10 @@ h2.editButtonText:hover img.editButton{
 }
 
 .centered {
+
 	text-align: center;
 }
+
 
 .leave_comment_pic {
 	height: 61px;
@@ -219,15 +221,6 @@ h2.editButtonText:hover img.editButton{
 
 }
 
-.feedpic {
-	height: 250px !important;
-	width: auto !important; 
-	border-radius: 50px;	
-
-
-	
-}
-
 .feedpicearth {
 	height: 175px !important; 
 	width: auto !important; 
@@ -265,9 +258,100 @@ h2.editButtonText:hover img.editButton{
 
 .mapdiv {
 	width: 96%;
-	margin-left: 25%;
+	margin-left: auto;
 	margin-right: auto;
 	border-style: solid;
   border-width: 2px;
   border-color: #ff891e;
+}
+
+.feedtext {
+	padding-left: 70px;
+	padding-top: 20px;
+}
+
+.feedpic {
+	text-align: center;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 50px;	
+
+}
+
+.usertrip {
+	margin-bottom: 20px;
+	margin-top: 80px;
+
+}
+
+.teamMember .maskingArea .list-inline li a {
+  display: block;
+  text-align: center;
+  border: 0px solid #4a4e52;
+  border-radius: 100%;
+  color: #ffffff;
+}
+.teamMember .maskingArea .list-inline li a:hover {
+  background-color: transparent;
+
+  border: 0px solid #4a4e52;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=$value)";
+  filter: alpha(opacity=1);
+  -moz-opacity: 1;
+  -khtml-opacity: 1;
+  opacity: 1;
+}
+
+.feedpadding {
+	
+	margin: 30px;
+}
+
+@media (min-width: 768px) {
+  .packagesList .media-body {
+    padding: 10px 0px 0px 10px !important;
+  }
+}
+
+.padding {
+	padding: 1px;
+	margin: 1px;
+}
+
+.feed-detail-buttons-padding {
+	padding: 1px;
+	margin: 5px;
+	text-align: center;
+}
+
+.sidebardates{
+	margin-left: 55px;
+}
+.pageTitle .titleTable .titleTableInner .pageTitleInfo h1 {
+	text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
+}
+
+.navbar-brand {
+
+  background-image: url("../img/scenery/travellogo2.jpg") !important;
+  height: 100%;
+}
+
+.paneluserpic {
+	width: 100% !important;
+	height: max 100px !important;
+	margin-top: 15px;
+	border-radius: 30px;
+}
+
+.loginfont {
+	text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
+}
+
+
+.usershowimage {
+	height: 300px;
+	margin-top: -30px;
+	border-radius: 30px;
 }

@@ -56,8 +56,6 @@
                  <div class="form-group col-sm-6 col-xs-12">
                   <%= label_tag :name %>
                     <%= text_field_tag :name, nil, class: "form-control" %>
-              
-                  
                       <div>
                         <%= label_tag :description %>
                         <%= text_field_tag :description, nil, class: "form-control"  %>
@@ -89,9 +87,13 @@
                         <%= text_field_tag :attendee5_email, nil, class: "form-control"  %>
                         </div>
 
-                        <%= label_tag "time" %>
+                        <%= label_tag "Departure Date" %>
                         <div class="bookingDrop">
                         <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'} %>
+                        </div>
+                        <%= label_tag "Return Date" %>
+                        <div class="bookingDrop">
+                        <%= date_select :end_date, :end_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'} %>
                         </div>
 
                  </div>

@@ -12,8 +12,9 @@ class TripsController < ApplicationController
 
   def create
 
-    date = Date.new(params[:start_date]["start_date(1i)"].to_i, params[:start_date]["start_date(2i)"].to_i, params[:start_date]["start_date(3i)"].to_i)
-    @trip = Trip.new(name: params[:name], description: params[:description], tagline: params[:tagline], archived: false, start_date: date)
+    start_date = Date.new(params[:start_date]["start_date(1i)"].to_i, params[:start_date]["start_date(2i)"].to_i, params[:start_date]["start_date(3i)"].to_i)
+    end_date = Date.new(params[:end_date]["end_date(1i)"].to_i, params[:end_date]["end_date(2i)"].to_i, params[:end_date]["end_date(3i)"].to_i)
+    @trip = Trip.new(name: params[:name], description: params[:description], tagline: params[:tagline], archived: false, start_date: start_date, end_date: end_date)
     if @trip.save
       usertrip = Usertrip.new(user_id: current_user.id, trip_id: @trip.id, admin: true)
       usertrip.save
@@ -42,6 +43,10 @@ class TripsController < ApplicationController
     @admins = []
     Usertrip.where(trip_id: params[:id]).where(admin: true).each do |admin|
       @admins << admin.user_id
+    end
+    @usertrips = []
+    Usertrip.where(trip_id: params[:id]).each do |usertrip|
+      @usertrips << usertrip.user_id
     end
 
   end

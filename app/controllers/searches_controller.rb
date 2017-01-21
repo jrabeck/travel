@@ -1,13 +1,11 @@
 class SearchesController < ApplicationController
 
 	def all
-    @search_term = params[:search]
+    @search_term = params[:search_term]
     @trips = Trip.where("name ILIKE ?", "%#{@search_term}%")
     @users = User.where("first_name ILIKE ?", "%#{@search_term}%")
     @stops = Stop.where("name ILIKE ?", "%#{@search_term}%")
-    if current_user
-      @trips = current_user.trips
-    end
+
   end
 
   def users

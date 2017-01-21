@@ -187,10 +187,6 @@
             </aside>
           </div>
 
-
-
-
-
           <div class="col-sm-9 col-xs-12 whitediv">
           	<% @users.each do |user| %>
 	            <div class="feed-item whitediv">
@@ -243,7 +239,7 @@
                     <div class="col-xs-12">
                       <div class="row media blogPostListItem">
                       <div class="col-md-6" >
-                        <a class="" href="/trips/<%=trip.id%>">
+                        <a class="" href="#">
                           <% if stop.images.length > 0 %>
                               <img class=" feedpicmedia-object" src="<%=stop.images.first.url%>" alt="blog-image">
                             <% else %>
