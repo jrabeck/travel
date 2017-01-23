@@ -36,10 +36,11 @@
     <!-- WHITE SECTION FILTER-->
     <section class="mainContentSection">
       <div class="container">
-	      
-	      	<div class="usershowimage"">
-	      		<img class="usershowimage" src="<%=@user.images.first.url%>">
+	      	<% if @user.images.length > 0 %>
+	      	<div class="usershowimage">
+	      		<img class="usershowimage" src="<%=@user.images.first.url%>">	
 	      	</div>
+	      	<% end %>
 	     
         <div class="row">
           <div class="col-xs-12">

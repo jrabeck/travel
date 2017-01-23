@@ -1,0 +1,58 @@
+<% if stop.archived != true%>
+
+<div class="media packagesList borderradius30">
+  <a class="media-left feedpic" href="/stops/<%=stop.id%>">
+
+  <% if stop.images.length > 0 %>
+    <img class="media-object borderradius30" src="<%=stop.images.first.url%>" alt="Image">
+  <% else %>
+    <img class="earth feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+  <% end %>
+
+  <% if stop.start_date || stop.end_date %>
+    <ul class="list-inline centeredd feed-detail-buttons-padding">
+      <li>
+        <span class="textInfo backgroundorange">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <% if stop.start_date%> 
+            <%=stop.start_date%> 
+          <% else %> 
+            ? 
+          <% end %> 
+            - 
+          <% if stop.end_date%>
+            <%=stop.end_date%> 
+          <% else %>
+            ? 
+          <% end %> 
+        </span>
+      </li>
+      <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i> 5 days</span></li>
+      <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i><%= activity.created_at %></span></li>
+    </ul>
+  <% end %>
+  </a>
+
+  <div class="media-body">
+    <div class="">
+      <h4 class="media-heading"><a href="/stops/<%=stop.id%>"> The Stop: "<%=stop.name%>" 
+
+        <% if activity.key == "trip.update" %> 
+        has been updated! 
+        <% end %>
+        <% if activity.key == "trip.create" %>
+        has been created!
+        <% end %>
+
+        <%= activity.id %></a></h4>
+      <div class="countryRating">   
+        <% if stop.tagline %> <span>"<%= stop.tagline %>"</span><br> <% end %>
+      </div> <!-- country rating -->
+      <% if stop.description %>
+      <p><%= stop.description.first(275) %></p>
+      <% end %>
+    </div> <!-- bodyleft -->
+  </div> <!-- media-body-->
+</div> <!-- media packagesList -->
+
+<% end %>

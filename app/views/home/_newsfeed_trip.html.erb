@@ -1,0 +1,60 @@
+<% if trip.archived != true %>
+
+<div class="media packagesList borderradius30">
+  <a class="media-left feedpic" href="/trips/<%=trip.id%>">
+
+  <% if trip.images.length > 0 %>
+    <img class="media-object borderradius30 feedimgpad" src="<%=trip.images.first.url%>" alt="Image">
+  <% else %>
+    <img class="earth feedpicearth media-object feedimgpad" src="/img/earth.png" alt="blog-image">
+  <% end %>
+
+  <% if trip.start_date || trip.end_date %>
+    <ul class="list-inline centeredd feed-detail-buttons-padding">
+      <li>
+        <span class="textInfo backgroundorange">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <% if trip.start_date%> 
+            <%=trip.start_date%> 
+          <% else %> 
+            ? 
+          <% end %> 
+            - 
+          <% if trip.end_date%>
+            <%=trip.end_date%> 
+          <% else %>
+            ? 
+          <% end %> 
+        </span>
+      </li>
+      <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i> 5 days</span></li>
+    </ul>
+  <% end %>
+  </a>
+
+  <div class="media-body">
+    <div class="">
+      <h4 class="media-heading"><a href="/trips/<%=trip.id%>">The Trip: "<%=trip.name%>" 
+        <% if activity.key == "trip.update" %> 
+        has been updated! 
+        <% end %>
+        <% if activity.key == "trip.create" %>
+        has been created!
+        <% end %>
+        <%= activity.id %></a></h4>
+      <div class="countryRating">   
+        <p> Tr@\/e|ers on this trip: <br>
+          <% trip.users.each_with_index do |user, index|%>
+          <%= link_to "#{user.first_name} #{user.last_name}", "/users/#{user.id}" %><%= "," unless index == trip.users.length - 1 %>  
+          <% end %>
+        </p>
+        <% if trip.tagline %> <span>"<%= trip.tagline %>"</span><br> <% end %>
+      </div> <!-- country rating -->
+      <% if trip.description %>
+      <p><%= trip.description.first(275) %></p>
+      <% end %>
+    </div> <!-- bodyleft -->
+  </div> <!-- media-body-->
+</div> <!-- media packagesList -->
+
+<% end %>

@@ -1,4 +1,4 @@
-
+ 
 <div class="main-wrapper">
   <!-- PAGE TITLE -->
 
@@ -86,11 +86,16 @@
               <li role="presentation" class="active">
                 <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Info</a>
               </li>
+              <% if @usertrips.exclude?(current_user.id) %>
+              <li role="presentation">
+                <a href="#journal" aria-controls="journal" role="tab" data-toggle="tab">Journal</a>
+              </li>
+              <% end %> 
               <li role="presentation">
                 <a href="#maptab" aria-controls="maptab" role="tab" data-toggle="tab">map</a>
               </li>
               <li role="presentation">
-                <a href="#location-map" aria-controls="location-map" role="tab" data-toggle="tab" onclick="showPhotos()">pictures</a>
+                <a href="#all-pictures" aria-controls="all-pictures" role="tab" data-toggle="tab" onclick="showPhotos()">pictures</a>
               </li>
               <li role="presentation">
                 <a href="#stops" aria-controls="stops" role="tab" data-toggle="tab" onclick="showPhotos()">stops</a>
@@ -98,7 +103,7 @@
               <% @usertrips.each do |usertrip| %>
               <% if usertrip == current_user.id %>
               <li role="presentation" class="dropdown col-md-1 col-lg-1 col-sm-1">
-                <button class="btn buttonTransparent dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Edit tools
+                <button class="btn buttonTransparent dropdown-toggle editbutton" type="button" id="menu1" data-toggle="dropdown">Edit tools
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#add-stop" aria-controls="add-stop" role="tab" data-toggle="tab">Add a Stop</a></li>
@@ -107,14 +112,21 @@
                   </li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#add-travelers" aria-controls="add-travelers" role="tab" data-toggle="tab">Add Tr@\/e|ers</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#edit-trip" aria-controls="edit-trip" role="tab" data-toggle="tab">Edit Trip</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1"  aria-controls="tour-guide" role="tab" data-toggle="tab"> <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1"  aria-controls="tour-guide" role="tab" data-toggle="tab"> 
+                  <% if @trip.archived == false || @trip.archived == nil %>
+                  <%= link_to 'Archive Trip', "/trips/#{@trip.id}/archive", role: "tab", method: :patch %></a>
+                  <% end %>
+                  <% if @trip.archived == true %>
+                  <%= link_to 'UnArchive Trip', "/trips/#{@trip.id}/unarchive", role: "tab", method: :patch %></a>
+                  <% end %>
                 </ul>
-              </div>
-              
+              </li>
               <% end %>
               <% end %>
+            </ul> <!-- tablist -->
+          </div> <!--  countryTabs -->
               
-            </ul>
+            
 
             <!-- Tab panes -->
             <div class="tab-content">
@@ -125,8 +137,8 @@
                     <div class="commonInfo">
                       <div class="container">
                       <h2><%=@trip.tagline%> </h2>
-                      <p> Users on this trip: <% @trip.users.each do |user|%>
-                        <%= link_to "#{user.first_name} #{user.last_name}, ", "/users/#{user.id}" %>  
+                      <p> Users on this trip: <% @trip.users.each_with_index do |user, index|%>
+                        <%= link_to "#{user.first_name} #{user.last_name}", "/users/#{user.id}" %><%= "," unless index == @trip.users.length - 1 %>  
                         <% end %></p> 
                         <p> <%=@trip.description%> </p>
                       </div>
@@ -193,7 +205,14 @@
                                 <%= label_tag :Stop_number %>
                                 <%= text_field_tag :order, nil, class: "form-control"  %>
                               </div>
-                              <a class="btn buttonTransparent"> <%= submit_tag "Submit" %> </a>
+                              <div class="bookingDrop">
+                                  <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'}, value: @trip.start_date %>
+                                </div>
+                                <%= label_tag "End Date" %>
+                                <div class="bookingDrop">
+                                  <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'} %>
+                                </div>
+                               <%= submit_tag "Submit", class: "btn buttonTransparent editbutton" %> 
                               <% end %> 
                             </div>
                           </div>
@@ -264,7 +283,7 @@
                               <%= text_field_tag :attendee5_email, nil, class: "form-control"  %>
                             </div>
                           </div>
-                          <%= submit_tag "Submit" %>
+                          <%= submit_tag "Submit", class: "btn buttonTransparent editbutton"%>
                           <% end %>
                         </form>
                       </div>
@@ -293,12 +312,12 @@
                                 <%= hidden_field_tag :user_id, current_user.id %>
                                 <%= hidden_field_tag :blogable_type, "Trip" %>
                                 <%= hidden_field_tag :blogable_id, @trip.id %>
-                                <%= submit_tag  "Submit", class: "btn buttonCustomPrimary" %> 
+                                <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
                                 <% end %>
                               </div>          
                               <br>
                               <br>
-                              <% else %>
+                              <% elsif @usertrips.exclude?(current_user.id) && @blogentries.length == 0 %>
                               <h4> Sorry! No Journal entries have been made yet. </h4>
                               <% end %>
                            
@@ -335,6 +354,47 @@
                     </div>
 
 
+        <div role="tabpanel" class="tab-pane" id="all-pictures">
+          <!-- WHITE SECTION FILTER-->
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="filter-container isotopeFilters">
+                  <ul class="list-inline filter">
+                    <li class="active" style="display: none;"><a id="allpicbutton" href="#" data-filter="*">all pics</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div> <!-- container -->
+          <div class="container">
+            <div class="row isotopeContainer" id="container">
+              <% @trip.images.each do |image| %>
+              <div class="col-sm-3 isotopeSelector">
+                <article class="">
+                  <figure>
+                    <img src="<%=image.url%>" alt="">
+                    <h4><%=%></h4>
+                    <div class="overlay-background">
+                      <div class="inner"></div>
+                    </div>
+                    <div class="overlay">
+                      <a class="fancybox-pop" rel="portfolio-1" href="<%=image.url%>">
+                        <span class="overlayInfo overflow_hidden">
+                          <p><%=image.description%></p>
+                          <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
+                        </span>
+                      </a>
+                    </div> <!-- overlay -->
+                  </figure>
+                </article>
+              </div> <!-- isotope selector -->
+              <%end%>   
+            </div> <!-- isoptope container -->
+          </div> <!-- container -->
+        </div> <!-- tab panel -->
+
+
 
 
                     <div role="tabpanel" class="tab-pane" id="edit-trip">
@@ -366,7 +426,7 @@
                                 </div>
                                 </div>
 
-                              <%= submit_tag "Submit" %>
+                              <%= submit_tag "Submit", class: "btn buttonTransparent editbutton" %>
                             </div>
                             <% end %>
                           </div>
@@ -436,3 +496,14 @@
     });
 
 </script>
+
+<script type="text/javascript"> 
+    function showPhotos() {
+      console.log("clicked");
+      setTimeout(
+        function() 
+        {
+          $( "#allpicbutton" ).click()          
+        }, 1);
+    }
+  </script>

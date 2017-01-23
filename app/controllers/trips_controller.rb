@@ -11,9 +11,12 @@ class TripsController < ApplicationController
   end
 
   def create
-
+    if params[:start_date]["start_date(1i)"] != ""
     start_date = Date.new(params[:start_date]["start_date(1i)"].to_i, params[:start_date]["start_date(2i)"].to_i, params[:start_date]["start_date(3i)"].to_i)
+    end
+    if params[:end_date]["end_date(1i)"] != ""
     end_date = Date.new(params[:end_date]["end_date(1i)"].to_i, params[:end_date]["end_date(2i)"].to_i, params[:end_date]["end_date(3i)"].to_i)
+    end
     @trip = Trip.new(name: params[:name], description: params[:description], tagline: params[:tagline], archived: false, start_date: start_date, end_date: end_date)
     if @trip.save
       usertrip = Usertrip.new(user_id: current_user.id, trip_id: @trip.id, admin: true)
@@ -65,6 +68,13 @@ class TripsController < ApplicationController
     @trip.archived = true
     @trip.save
     redirect_to '/'
+  end
+
+  def unarchive
+  @trip = Trip.find_by(id: params[:id])
+  @trip.archived = false
+  @trip.save
+  redirect_to "/trips/#{@trip.id}"
   end
 
   def update
