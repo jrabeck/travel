@@ -51,6 +51,12 @@ class TripsController < ApplicationController
     Usertrip.where(trip_id: params[:id]).each do |usertrip|
       @usertrips << usertrip.user_id
     end
+    @stopcoordinates = []
+    @trip.stops.order(order: :desc).each do |stop|
+    if stop.latitude 
+    @stopcoordinates << stop 
+    end
+    end 
 
   end
 

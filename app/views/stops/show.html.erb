@@ -23,13 +23,12 @@
   <!-- PAGE CONTENT -->
   <section class="mainContentSection singlePackage">
     <div class="container">
-      <div class="row ">
+
+      <div class="row "> <!-- carousel -->
         <% if @stop.images.length > 0 %>
         <div class="row galleryCarousel">
           <div class="col-sm-8 col-xs-12">
             <div id="package-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
-
-
               <div class="carousel-inner stops-carousel">
                 <div class="item active stops-carousel">
                   <img alt="slide" class="stops-carousel carousel_width" src="<%=@stop.images.first.url%>">
@@ -69,16 +68,13 @@
         <% end %>
 
 
-         
-
-
-      <div class="row">
+      <div class="row"> <!-- tabs -->
         <div class="col-xs-12">
           <div role="tabpanel" class="countryTabs">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active">
-                <a href="#over-view" aria-controls="over-view" role="tab" data-toggle="tab">Info</a>
+                <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a>
               </li>
               <% if @userstops.exclude?(current_user.id) %>
               <li role="presentation">
@@ -87,6 +83,9 @@
               <% end %> 
               <li role="presentation">
                 <a href="#all-pictures" aria-controls="all-pictures" role="tab" data-toggle="tab" onclick="showPhotos()">all pictures</a>
+              </li>
+              <li role="presentation">
+                <a href="#other-stops" aria-controls="other-stops" role="tab" data-toggle="tab">Other stops</a>
               </li>
               <li>
                 <a href="/trips/<%=@trip.id%>">Back to Trip</a>
@@ -101,8 +100,7 @@
                   <li role="presentation">
                   <a role="menuitem" tabindex="-1" href="#journal" aria-controls="journal" role="tab" data-toggle="tab"> Write in Journal </a>
                   </li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#add-travelers" aria-controls="add-travelers" role="tab" data-toggle="tab">Add Tr@\/e|ers</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#edit-trip" aria-controls="edit-trip" role="tab" data-toggle="tab">Edit Trip</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#edit-stop" aria-controls="edit-stop" role="tab" data-toggle="tab">Edit Stop</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1"  aria-controls="tour-guide" role="tab" data-toggle="tab"> 
                   <% if @stop.archived == false || @stop.archived == nil %>
                   <%= link_to 'Archive Stop', "/stops/#{@stop.id}/archive", role: "tab", method: :patch %></a>
@@ -120,33 +118,105 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div><!--  row tabs -->
 
 
 
     <!-- Tab panes -->
       <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane active" id="over-view">
+        <div role="tabpanel" class="tab-pane active" id="description">
           <div class="row">
-            <div class="col-sm-8 col-xs-12">
+            <div class="col-sm-8 col-xs-12 showtab whitediv">
               <div class="commonInfo">
                 <h2><%= @stop.tagline %></h2>
                 <p><%= @stop.description %></p>
               </div>
             </div>
+
           </div>
+          <div class="container"> <!-- comments -->
+        <div class="commentsArea">
+        <br>
+          <% @comments.each do |this_comment| %>
+            <div class="media showtab whitediv">
+              <div class="whitediv">
+                <a class="media-left" href="#">
+                <img class="media-object comment_pic" src="/img/earth.png" alt="Image">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading">
+                    <%= this_comment.user.first_name %> <%= this_comment.user.last_name %>
+                  </h4>
+                  <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span>
+                  </h4>
+                  <p> <%= this_comment.comment %> </p>
+                  <button class="btn btn-link" type="button">Reply</button>
+                    <% if current_user.id == this_comment.user.id %>
+                      <%= link_to 'Delete', "/stops/comments/#{this_comment.id}", method: :delete %>
+                    <% end %>
+                </div><!--  media body -->
+              </div><!--  whitediv -->
+            </div> <!-- media -->
+          <% end %> <!-- each comment -->
+
+          <div class="media">
+            <a class="media-left" href="#">
+              <img class="media-object leave_comment_pic" src="/img/earth.png" alt="Image">
+            </a>
+            <% if current_user %>   
+              <h1>Leave a comment!</h1>
+              <div>
+              <%= form_tag "/stops/#{@stop.id}/comments", method: :post do %>
+              <div class="form-group comments">
+                <%= text_area_tag :comment, nil, placeholder: "Leave a comment!", class: "form-control" %>
+              </div>
+              <%= hidden_field_tag :user_id, current_user.id %>
+              <%= hidden_field_tag :commentable_type, "Stop" %>
+              <%= hidden_field_tag :commentable_id, @stop.id %>
+              <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
+              <% end %>
+              </div>          
+            <% end %>
+
+            <% if !current_user %>
+            <h3> Sign in to leave a comment! </h3>
+              <a target="_blank" href="/users/auth/facebook" class="FBLI">    Sign in with Facebook</a>
+            <%end%>
+
+          </div> <!-- media -->
+        </div> <!-- comments area -->
+      </div> <!-- comments container -->
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tour-guide">
+        <div role="tabpanel" class="tab-pane" id="other-stops">
           <div class="row">
             <div class="col-sm-8 col-xs-12">
               <div class="commonInfo">
-                <h2>text</h2>
-                <p>text</p>
-                <ul class="list-inline">
-                  <li><i class="fa fa-square" aria-hidden="true"></i> text </li>
-                </ul>
+                <div class="container">
+                  <div class="relatedProduct margin">
+                    <% if @trip.stops.length > 1 %>
+                      <% @trip.stops.each do |stop| %>
+                        <% if stop != @stop %>
+                          <div class="col-sm-4 col-xs-12">
+                            <div class="relatedItem">
+                              <% if stop.images.length > 0 %>
+                                <%= image_tag stop.images.first.url %>
+                              <% else %>
+                                <img src="/img/earth.png">
+                              <% end %>
+                                <div class="maskingInfo">
+                                  <h4><%=stop.name%></h4>
+                                  <p><%=stop.tagline%></p>
+                                  <a href="/stops/<%=stop.id%>" class="btn buttonTransparent">view more</a>
+                                </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </div> <!-- relatedproduct -->
+                </div>
               </div>
             </div>
           </div>
@@ -154,62 +224,57 @@
 
 
         <div role="tabpanel" class="tab-pane" id="journal">
-                  <div class="row">
-                    <div class="col-sm-8 col-xs-12">
-                      <div class="commonInfo">
-                        <div class="container">
-                          <div class="commentsArea">
-                           
-                              <% if @userstops.include?(current_user.id) %>
-                              <h1>Make a journal entry!</h1>
-                              <div>
-                                <%= form_tag "/stops/#{@stop.id}/journal", method: :post do %>
-                                <div class="form-group comments">
-                                  <%= text_area_tag :entry, nil, placeholder: "How's your trip going??", class: "form-control" %>
-                                </div>
-                                <%= hidden_field_tag :user_id, current_user.id %>
-                                <%= hidden_field_tag :blogable_type, "Stop" %>
-                                <%= hidden_field_tag :blogable_id, @stop.id %>
-                                <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
-                                <% end %>
-                              </div>          
-                              <br>
-                              <br>
-                              <% else %>
-                              <h4> Sorry! No Journal entries have been made yet. </h4>
-                              <% end %>
-                           
-
-                            <% @blogentries.each do |blog| %>
-                            <%#if this_comment.commentable_type == "Trip" %>
-                            <div class="media">
-                              <a class="media-left" href="#">
-                                <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
-                                <div class="media-body blog">
-                                  <h4 class="media-heading">
-                                    <%= blog.user.first_name %> <%= blog.user.last_name %></h4>
-                                    <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span></h4>
-                                    <p> <%= blog.entry %> </p>
-                                    <button class="btn btn-link" type="button">Reply</button>
-                                    <% if current_user.id == blog.user.id %>
-                                    <%= link_to 'Delete', "/journals/#{blog.id}", method: :get %>
-                                    <% end %>
-                                    <br>
-                                    <br>
-                                  </div>
-                                  <br>
-                                  <%# end %>
-                                </div>
-                                <% end %>
-
-
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+          <div class="row">
+            <div class="col-sm-8 col-xs-12">
+              <div class="commonInfo">
+                <div class="container">
+                  <div class="commentsArea">                  
+                  <% if @userstops.include?(current_user.id) %>
+                  <h1>Make a journal entry!</h1>
+                  <div>
+                    <%= form_tag "/stops/#{@stop.id}/journal", method: :post do %>
+                    <div class="form-group comments">
+                      <%= text_area_tag :entry, nil, placeholder: "How's your trip going??", class: "form-control" %>
                     </div>
+                    <%= hidden_field_tag :user_id, current_user.id %>
+                    <%= hidden_field_tag :blogable_type, "Stop" %>
+                    <%= hidden_field_tag :blogable_id, @stop.id %>
+                    <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
+                    <% end %>
+                  </div>          
+                  <br>
+                  <br>
+                  <% else %>
+                  <h4> Sorry! No Journal entries have been made yet. </h4>
+                  <% end %>
+               
+
+                  <% @blogentries.each do |blog| %>
+                  <%#if this_comment.commentable_type == "Trip" %>
+                    <div class="media">
+                      <a class="media-left" href="#">
+                        <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
+                        <div class="media-body blog whitediv">
+                          <h4 class="media-heading">
+                            <%= blog.user.first_name %> <%= blog.user.last_name %></h4>
+                            <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span></h4>
+                            <p> <%= blog.entry %> </p>
+                            <button class="btn btn-link" type="button">Reply</button>
+                            <% if current_user.id == blog.user.id %>
+                            <%= link_to 'Delete', "/journals/#{blog.id}", method: :get %>
+                            <% end %>
+                            <br>
+                            <br>
+                        </div> <!-- media-body blog -->
+                          <br>
+                    </div> <!-- media blog entry -->
+                  <% end %>
+                  </div> <!-- comments area -->
+                </div> <!-- container -->
+              </div> <!-- common info -->
+            </div> <!-- col -->
+          </div> <!-- row -->
+        </div> <!-- journal panel -->
 
 
 
@@ -252,101 +317,17 @@
             </div> <!-- isoptope container -->
           </div> <!-- container -->
         </div> <!-- tab panel -->
-      </div> <!-- tab content-->
+      </div> <!-- tab panels -->
+      
 
-
-
-
-      <% if @trip.stops.length > 1 %>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="relatedProduct margin">
-            <h2>Other Stops on this Trip:</h2>
-              <% @trip.stops.each do |stop| %>
-                <% if stop != @stop %>
-                  <div class="col-sm-4 col-xs-12">
-                    <div class="relatedItem">
-                      <% if stop.images.length > 0 %>
-                        <%= image_tag stop.images.first.url %>
-                      <% else %>
-                        <img src="/img/earth.png">
-                      <% end %>
-                        <div class="maskingInfo">
-                          <h4><%=stop.name%></h4>
-                          <p><%=stop.tagline%></p>
-                          <a href="/stops/<%=stop.id%>" class="btn buttonTransparent">view more</a>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-          </div> <!-- relatedproduct -->
-        </div> <!-- col -->
-      </div> <!-- row -->
-
-      <div class="container">
-        <div class="commentsArea">
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-
-          <% @comments.each do |this_comment| %>
-          <%#if this_comment.commentable_type == "Trip" %>
-          <div class="media">
-            <a class="media-left" href="#">
-              <img class="media-object comment_pic" src="/img/earth.png" alt="Image">
-            </a>
-            <div class="media-body">
-              <h4 class="media-heading">
-                <%= this_comment.user.first_name %> <%= this_comment.user.last_name %>
-              </h4>
-              <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span>
-              </h4>
-              <p> <%= this_comment.comment %> </p>
-              <button class="btn btn-link" type="button">Reply</button>
-              <% if current_user.id == this_comment.user.id %>
-              <%= link_to 'Delete', "/stops/comments/#{this_comment.id}", method: :delete %>
-              <% end %>
-              <br>
-              <br>
-            </div> <!-- media-body -->
-              <%# end %>
-          <% end %>
-          </div> <!-- media  actally looks better without- todo: close gap with margins-->
-          <div class="media">
-            <a class="media-left" href="#">
-              <img class="media-object leave_comment_pic" src="/img/earth.png" alt="Image">
-            </a>
-
-            <% if current_user %>   
-            <h1>Leave a comment!</h1>
-            <div>
-              <%= form_tag "/stops/#{@stop.id}/comments", method: :post do %>
-              <div class="form-group comments">
-                <%= text_area_tag :comment, nil, placeholder: "Leave a comment!", class: "form-control" %>
-              </div>
-              <%= hidden_field_tag :user_id, current_user.id %>
-              <%= hidden_field_tag :commentable_type, "Stop" %>
-              <%= hidden_field_tag :commentable_id, @stop.id %>
-              <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
-              <% end %>
-            </div>          
-
-            <% end %>
-            <% if !current_user %>
-            <h3> Sign in to leave a comment! </h3>
-              <a target="_blank" href="/users/auth/facebook" class="FBLI">    Sign in with Facebook</a>
-            <%end%>
-          </div> <!-- media -->
-        </div> <!-- comments area -->
-      </div> <!-- commentcontainer -->
-    </div> <!-- container -->
+      
+    </div> <!-- container main -->
   </section> <!-- mainContentSection singlePackage -->
 </div> <!-- main container -->
       
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap">
+  </script>
 
   <script type="text/javascript"> 
     function showPhotos() {
@@ -358,6 +339,8 @@
         }, 1);
     }
   </script>
+
+  
 
   <script>
     function initMap() {
@@ -371,8 +354,5 @@
         map: map
       });
     }
-  </script>
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_API']}" %>&callback=initMap">
   </script>
 

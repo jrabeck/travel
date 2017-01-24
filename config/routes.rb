@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   get "/journals/:id", to: "blogentries#destroy"
   get "/stops/:id/archive", to: "stops#archive"
   get "/stops/:id/unarchive", to: "stops#unarchive"
+  post "/trips/:id/stop/new", to: "stops#create"
 
 
 

@@ -191,26 +191,32 @@
       <% type = activity.trackable_type %>
       <% trip = Trip.find_by(id: id) %>
       <% stop = Stop.find_by(id: id) %>
-
-      <% if (activity.key == "trip.update") && (trip) %>
-
+        
         <!-- If trip has been updated atleast 1 hour after last update/creation -->
         <!-- If matching create doesn't exist, show news feed item -->
-        <% event_match = (PublicActivity::Activity.where("id < (?) AND trackable_id = (?)", activity.id, activity.trackable_id)).order(created_at: :desc).first %>
         <!-- If an activity is an update and that update is not within an hour of the creation or any previous update of that same thing, show it -->
+
+
+      <% event_match = (PublicActivity::Activity.where("id < (?) AND trackable_id = (?)", activity.id, activity.trackable_id)).order(created_at: :desc).first %>
+
+      <% if (activity.key == "trip.update") && (trip) %>
         <% if (activity.created_at - event_match.created_at > 1.hour)  %>
-            <%= render partial: 'newsfeed_trip', locals: { trip: trip, activity: activity } %>
+          <%= render partial: 'newsfeed_trip', locals: { trip: trip, activity: activity } %>
         <% end %>
 
       <% elsif (activity.key == "trip.create") && (trip) %>
-
-      <%= render partial: 'newsfeed_trip', locals: { trip: trip, activity: activity } %>
+         <%= render partial: 'newsfeed_trip', locals: { trip: trip, activity: activity } %>
 
       <% elsif (activity.key == "stop.update") && (stop) %>
-        <%= render partial: 'newsfeed_stop', locals: { stop: stop, activity: activity } %>
-      <% elsif (activity.key == "stop.create") && (stop) %>
+        <% if (activity.created_at - event_match.created_at > 1.hour)  %>
         <%= render partial: 'newsfeed_stop', locals: { stop: stop, activity: activity } %>
         <% end %>
+
+      <% elsif (activity.key == "stop.create") && (stop) %>    
+        <%= render partial: 'newsfeed_stop', locals: { stop: stop, activity: activity } %>  
+
+      <% end %> <!-- 4 types of activities -->
+
     <% end %> <!-- each activity -->
 
     <div class="row">
@@ -233,7 +239,7 @@
               </a>
             </li>
           </ul>
-        </div> a<!-- ginationCenter paginationTransparent -->
+        </div> <!-- ginationCenter paginationTransparent -->
       </div> <!-- col -->
     </div> <!-- row feed # buttons -->
   </div> <!-- feedpadding -->            

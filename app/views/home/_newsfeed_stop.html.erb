@@ -28,19 +28,18 @@
         </span>
       </li>
       <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i> 5 days</span></li>
-      <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i><%= activity.created_at %></span></li>
     </ul>
   <% end %>
   </a>
 
   <div class="media-body">
     <div class="">
-      <h4 class="media-heading"><a href="/stops/<%=stop.id%>"> The Stop: "<%=stop.name%>" 
+      <h4 class="media-heading feedhead"><a href="/stops/<%=stop.id%>"> The Stop: "<%=stop.name%>" 
 
-        <% if activity.key == "trip.update" %> 
+        <% if activity.key == "stop.update" %> 
         has been updated! 
         <% end %>
-        <% if activity.key == "trip.create" %>
+        <% if activity.key == "stop.create" %>
         has been created!
         <% end %>
 
