@@ -178,148 +178,73 @@
 
           <div class="col-sm-9 col-xs-12">
           	<% @users.each do |user| %>
-
-            <div class="media packagesList borderradius30">
-                <a class="media-left feedpic" href="/users/<%=user.id%>">
-
-                <% if user.images.length > 0 %>
-                  <img class="media-object borderradius30" src="<%=user.images.first.url%>" alt="Image">
-                <% else %>
-                  <img class="earth feedpicearth media-object" src="/img/earth.png" alt="blog-image">
-                <% end %>
-                </a>
-
-                <div class="media-body">
-                  <div class="">
-                    <h4 class="media-heading feedhead"><a href="/users/<%=user.id%>"> <%=user.first_name%> <%=user.last_name%>
-                    <div class="countryRating">   
-                      <br>
-                    </div> <!-- country rating -->
-                    <% if user.bio %>
-                    <p><%= user.bio.first(275) %></p>
-                    <% end %>
-                    <p class="black"> Trips <%= user.first_name %> has been on:</p>
-                    <% if user.trips.length > 0 %>
-                    <p class="black">
-                     <% user.trips.each_with_index do |trip, index| %>
-                      <a href="/trips/<%=trip.id%>"> <%= trip.name %> </a> 
-                      <%= "," unless index == user.trips.length - 1 %>  
-                    <% end %> </p>
-                    <% end %>
-                  </div> <!-- bodyleft -->
-                </div> <!-- media-body-->
-              </div> <!-- media packagesList -->
-
-	            
+	            <div class="feed-item ">
+	              <div class="row media blogPostListItem ">
+	              	<div class="col-md-6">
+	                  <a class="searchname" href="/users/<%=user.id%>">
+	                    <%=user.first_name%> <%=user.last_name%>
+	                  </a>
+	                </div>
+	              	</div>
+	           	</div>             
             <% end %>
 
             <% @trips.each do |trip| %>      
-              <% if trip.archived != true %>
 
-              <div class="media packagesList borderradius30">
-                <a class="media-left feedpic" href="/trips/<%=trip.id%>">
+             <br>
+             <h3><%=trip.name%></h3>
+             <br>
 
-                <% if trip.images.length > 0 %>
-                  <img class="media-object borderradius30 feedimgpad" src="<%=trip.images.first.url%>" alt="Image">
-                <% else %>
-                  <img class="earth feedpicearth media-object feedimgpad" src="/img/earth.png" alt="blog-image">
-                <% end %>
+                  <div class="whitediv">   
+                    <div class="col-xs-12">
+                      <div class="row media blogPostListItem">
+                      <div class="col-md-6" >
+                        <a class="" href="/trips/<%=trip.id%>">
+                          <% if trip.images.length > 0 %>
+                              <img class=" feedpicmedia-object" src="<%=trip.images.first.url%>" alt="blog-image">
+                            <% else %>
+                              <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                            <% end %>
+                        </a>
+                        </div>
+                          <div class="col-md-6">
+                           <h4><a  href="/trips/<%=trip.id%>" class="blogTitle"><%= trip.tagline %>
+                            </a></h4>
+                                  <p><%= trip.description %></p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
 
-                <% if trip.start_date || trip.end_date %>
-                  <ul class="list-inline centeredd feed-detail-buttons-padding">
-                    <li>
-                      <span class="textInfo backgroundorange">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        <% if trip.start_date%> 
-                          <%=trip.start_date%> 
-                        <% else %> 
-                          ? 
-                        <% end %> 
-                          - 
-                        <% if trip.end_date%>
-                          <%=trip.end_date%> 
-                        <% else %>
-                          ? 
-                        <% end %> 
-                      </span>
-                    </li>
-                    <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i> 5 days</span></li>
-                  </ul>
-                <% end %>
-                </a>
-
-                <div class="media-body">
-                  <div class="">
-                    <h4 class="media-heading feedhead"><a href="/trips/<%=trip.id%>"><%=trip.name%>
-                    <div class="countryRating">   
-                      <p> Tr@\/e|ers on this trip: <br>
-                        <% trip.users.each_with_index do |user, index|%>
-                        <%= link_to "#{user.first_name} #{user.last_name}", "/users/#{user.id}" %><%= "," unless index == trip.users.length - 1 %>  
-                        <% end %>
-                      </p>
-                      <% if trip.tagline %> <span>"<%= trip.tagline %>"</span> <br> <% end %>
-                      <br>
-                    </div> <!-- country rating -->
-                    <% if trip.description %>
-                    <p><%= trip.description.first(275) %></p>
-                    <% end %>
-                  </div> <!-- bodyleft -->
-                </div> <!-- media-body-->
-              </div> <!-- media packagesList -->
-
-              <% end %>
             <% end %>
 
             <% @stops.each do |stop| %>      
-              <% if stop.archived != true%>
 
-              <div class="media packagesList borderradius30">
-                <a class="media-left feedpic" href="/stops/<%=stop.id%>">
+             <br>
+             <h3><%=stop.name%></h3>
+             <br>
 
-                <% if stop.images.length > 0 %>
-                  <img class="media-object borderradius30" src="<%=stop.images.first.url%>" alt="Image">
-                <% else %>
-                  <img class="earth feedpicearth media-object" src="/img/earth.png" alt="blog-image">
-                <% end %>
+                  <div class="">   
+                    <div class="col-xs-12">
+                      <div class="row media blogPostListItem">
+                      <div class="col-md-6" >
+                        <a class="" href="#">
+                          <% if stop.images.length > 0 %>
+                              <img class=" feedpicmedia-object" src="<%=stop.images.first.url%>" alt="blog-image">
+                            <% else %>
+                              <img class="feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                            <% end %>
+                        </a>
+                        </div>
+                          <div class="col-md-6">
+                           <h4><a  href="/stops/<%=stop.id%>" class="blogTitle"><%= stop.tagline %>
+                            </a></h4>
+                                  <p><%= stop.description %></p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
 
-                <% if stop.start_date || stop.end_date %>
-                  <ul class="list-inline centeredd feed-detail-buttons-padding">
-                    <li>
-                      <span class="textInfo backgroundorange">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        <% if stop.start_date%> 
-                          <%=stop.start_date%> 
-                        <% else %> 
-                          ? 
-                        <% end %> 
-                          - 
-                        <% if stop.end_date%>
-                          <%=stop.end_date%> 
-                        <% else %>
-                          ? 
-                        <% end %> 
-                      </span>
-                    </li>
-                    <li><span class="textInfo backgroundorange"><i class="fa fa-clock-o" aria-hidden="true"></i> 5 days</span></li>
-                  </ul>
-                <% end %>
-                </a>
-
-                <div class="media-body">
-                  <div class="">
-                    <h4 class="media-heading feedhead"><a href="/stops/<%=stop.id%>"> The Stop: "<%=stop.name%>" 
-                    <div class="countryRating">   
-                      <% if stop.tagline %> <span>"<%= stop.tagline %>"</span><br> <% end %>
-                      <br>
-                    </div> <!-- country rating -->
-                    <% if stop.description %>
-                    <p><%= stop.description.first(275) %></p>
-                    <% end %>
-                  </div> <!-- bodyleft -->
-                </div> <!-- media-body-->
-              </div> <!-- media packagesList -->
-
-              <% end %>
             <% end %>
 
 
@@ -348,4 +273,3 @@
         </div>
       </div>
     </section>
-

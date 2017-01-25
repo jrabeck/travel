@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   delete '/comments/:id', to: 'comments#destroy'
   get '/', to: 'home#home'
-
+  post 'pictures/add', to: 'images#create'
   get '/trips/new', to: 'trips#new'
   get '/trips/:id', to: 'trips#show'
   get 'stops/comments/:id', to: 'comments#destroy'

@@ -177,7 +177,7 @@ $(function(){
                       <% current_user.trips.each do |trip| %>
                         <li class="dropdown dropdown-submenu"><a href="/trips/<%=trip.id%>"><%=trip.name%></a>
                             <% if trip.stops.length > 0 %>
-                              <ul class="dropdown-menu">
+                              <ul class="dropdown-menu scrollable-menu ">
                                 <% trip.stops.each do |stop| %>
                                 <li><a href="/stops/<%=stop.id%>"><%=stop.name%></a></li>
                                 <% end %>

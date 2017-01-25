@@ -41,7 +41,7 @@
         <% if activity.key == "trip.create" %>
         has been created!
         <% end %>
-        </a></h4>
+        <%= activity.id %></a></h4>
       <div class="countryRating">   
         <p> Tr@\/e|ers on this trip: <br>
           <% trip.users.each_with_index do |user, index|%>

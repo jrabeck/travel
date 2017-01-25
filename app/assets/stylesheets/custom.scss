@@ -365,7 +365,7 @@ h2.editButtonText:hover img.editButton{
 
 
 .usershowimage {
-	height: 300px;
+	width: 100%;
 	margin-top: -30px;
 	border-radius: 30px;
 }
@@ -437,4 +437,35 @@ h2.editButtonText:hover img.editButton{
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
+}
+
+.bio {
+	height: 300px;
+	margin-top: -60px;
+	border-radius: 30px;
+	border: 1px solid #ff891e;
+	background-color: #ffffff;
+}
+
+.vert-align {
+	    vertical-align: text-top;
+}
+
+.biotext {
+	margin: 10px;
+}
+
+.width100 {
+	width: 500px;
+}
+
+.black {
+	font-color: black;
+	color: black;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
 }

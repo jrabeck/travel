@@ -133,61 +133,62 @@
                 <p><%= @stop.description %></p>
               </div>
             </div>
-
           </div>
           <div class="container"> <!-- comments -->
-        <div class="commentsArea">
-        <br>
-          <% @comments.each do |this_comment| %>
-            <div class="media showtab whitediv">
-              <div class="whitediv">
-                <a class="media-left" href="#">
-                <img class="media-object comment_pic" src="/img/earth.png" alt="Image">
-                </a>
-                <div class="media-body">
-                  <h4 class="media-heading">
-                    <%= this_comment.user.first_name %> <%= this_comment.user.last_name %>
-                  </h4>
-                  <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span>
-                  </h4>
-                  <p> <%= this_comment.comment %> </p>
-                  <button class="btn btn-link" type="button">Reply</button>
-                    <% if current_user.id == this_comment.user.id %>
-                      <%= link_to 'Delete', "/stops/comments/#{this_comment.id}", method: :delete %>
-                    <% end %>
-                </div><!--  media body -->
-              </div><!--  whitediv -->
-            </div> <!-- media -->
-          <% end %> <!-- each comment -->
+            <div class="commentsArea">
+            <br>
 
-          <div class="media">
-            <a class="media-left" href="#">
-              <img class="media-object leave_comment_pic" src="/img/earth.png" alt="Image">
-            </a>
-            <% if current_user %>   
-              <h1>Leave a comment!</h1>
-              <div>
-              <%= form_tag "/stops/#{@stop.id}/comments", method: :post do %>
-              <div class="form-group comments">
-                <%= text_area_tag :comment, nil, placeholder: "Leave a comment!", class: "form-control" %>
-              </div>
-              <%= hidden_field_tag :user_id, current_user.id %>
-              <%= hidden_field_tag :commentable_type, "Stop" %>
-              <%= hidden_field_tag :commentable_id, @stop.id %>
-              <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
+              <% @comments.each do |this_comment| %>
+                <div class="media">
+                  <a class="media-left" href="#">
+                    <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
+                    <div class="media-body blog whitediv">
+                      <h4 class="media-heading">
+                        <h4 class="media-heading">
+                          <%= this_comment.user.first_name %> <%= this_comment.user.last_name %>
+                        </h4>
+                        <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span>
+                        </h4>
+                        <p> <%= this_comment.comment %> </p>
+                        <button class="btn btn-link" type="button">Reply</button>
+                          <% if current_user.id == this_comment.user.id %>
+                            <%= link_to 'Delete', "/stops/comments/#{this_comment.id}", method: :delete %>
+                          <% end %>                            
+                          <br>
+                          <br>
+                    </div> <!-- media-body blog -->
+                    <br>
+                </div> <!-- media blog entry -->
               <% end %>
-              </div>          
-            <% end %>
 
-            <% if !current_user %>
-            <h3> Sign in to leave a comment! </h3>
-              <a target="_blank" href="/users/auth/facebook" class="FBLI">    Sign in with Facebook</a>
-            <%end%>
 
-          </div> <!-- media -->
-        </div> <!-- comments area -->
-      </div> <!-- comments container -->
-        </div>
+                <div class="media">
+                  <a class="media-left" href="#">
+                    <img class="media-object leave_comment_pic" src="/img/earth.png" alt="Image">
+                  </a>
+                  <% if current_user %>   
+                    <h1>Leave a comment!</h1>
+                    <div>
+                      <%= form_tag "/stops/#{@stop.id}/comments", method: :post do %>
+                        <div class="form-group comments">
+                          <%= text_area_tag :comment, nil, placeholder: "Leave a comment!", class: "form-control" %>
+                        </div>
+                        <%= hidden_field_tag :user_id, current_user.id %>
+                        <%= hidden_field_tag :commentable_type, "Stop" %>
+                        <%= hidden_field_tag :commentable_id, @stop.id %>
+                        <%= submit_tag  "Submit", class: "btn buttonTransparent editbutton" %> 
+                      <% end %>
+                    </div>          
+                  <% end %>
+
+                  <% if !current_user %>
+                  <h3> Sign in to leave a comment! </h3>
+                    <a target="_blank" href="/users/auth/facebook" class="FBLI">    Sign in with Facebook</a>
+                  <%end%>
+                </div> <!-- media -->
+            </div> <!-- comments area -->
+          </div> <!-- comments container -->
+        </div> <!-- tab panel -->
 
         <div role="tabpanel" class="tab-pane" id="other-stops">
           <div class="row">
@@ -222,6 +223,79 @@
           </div>
         </div>
 
+        <div role="tabpanel" class="tab-pane showtab" id="edit-stop">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12 showtab whitediv">
+              <div class="commonInfo">
+                <div class="bookingForm">
+                <br>
+                  <div class="form-group col-sm-12 col-xs-12">
+                  <%= form_tag "/stops/#{@stop.id}", method: :patch do  %>
+                  <!-- <form action="/stops" method="POST" role="form" class="form"> -->
+                  <div class="row">
+                    <div class="form-group col-sm-12 col-xs-12">
+                      <%= label_tag :name %>
+                      <%= text_field_tag :name, nil, class: "form-control", value: @stop.name %>
+                      <div>
+                        <%= label_tag :description %>
+                        <%= text_field_tag :description, nil, class: "form-control", value: @stop.description  %>
+                      </div>
+                      <div>
+                        <%= label_tag :tagline %>
+                        <%= text_field_tag :tagline, nil, class: "form-control", value: @stop.tagline  %>
+                      </div>
+                      <%= label_tag "Start Date" %>
+                      <div class="bookingDrop">
+                        <%= date_select :start_date, :start_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'}, value: @stop.start_date %>
+                      </div>
+                      <%= label_tag "End Date" %>
+                      <div class="bookingDrop">
+                        <%= date_select :end_date, :end_date, prompt: {day: 'Choose day', month: 'Choose month', year: 'Choose year'}, value: @stop.end_date %>
+                      </div>
+                    </div> <!-- col -->
+                  </div> <!-- row -->
+
+                    <%= submit_tag "Submit", class: "btn buttonTransparent editbutton" %>
+                    <br>
+                    <br>
+                </div><!--  form -->
+                <% end %>
+                </div>
+              </div> <!-- common info -->
+            </div><!--  col -->
+          </div> <!-- row -->
+        </div> <!-- edit trip panel -->
+
+
+        <div role="tabpanel" class="tab-pane showtab" id="add-pic">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12 showtab whitediv">
+              <div class="commonInfo">
+                <div class="bookingForm">
+                <br>
+                  <div class="form-group col-sm-12 col-xs-12">
+                  <%= form_tag "/pictures/add", method: :post do  %>
+                  <!-- <form action="/stops" method="POST" role="form" class="form"> -->
+                  <div class="row">
+                    <div class="form-group col-sm-12 col-xs-12">
+                      <%= label_tag "add picture url" %>
+                      <%= text_field_tag :url, nil, class: "form-control" %>
+                      <%= label_tag "tagline" %>
+                      <%= text_field_tag :tagline, nil, class: "form-control" %>
+                      <%= hidden_field_tag "stop_id", @stop.id %>
+                    </div> <!-- col -->
+                  </div> <!-- row -->
+
+                    <%= submit_tag "Submit", class: "btn buttonTransparent editbutton" %>
+                    <br>
+                    <br>
+                </div><!--  form -->
+                <% end %>
+                </div>
+              </div> <!-- common info -->
+            </div><!--  col -->
+          </div> <!-- row -->
+        </div> <!-- edit trip panel -->
 
         <div role="tabpanel" class="tab-pane" id="journal">
           <div class="row">
