@@ -183,15 +183,23 @@ h2.editButtonText:hover img.editButton{
 	text-align: center;
 }
 
+.centeredd {
+
+	margin: 50%;
+}
+
+.useredit {
+
+}
 
 .leave_comment_pic {
 	height: 61px;
-	width: 61px;
+
 }
 
 .comment_pic {
 	height: 75px;
-	width: 75px;
+	
 }
 
 .home_panel {
@@ -365,9 +373,11 @@ h2.editButtonText:hover img.editButton{
 
 
 .usershowimage {
-	width: 100%;
+
 	margin-top: -30px;
 	border-radius: 30px;
+	max-height: 300px;
+	margin-bottom: 20px;
 }
 
 .smallmap {
@@ -389,6 +399,11 @@ h2.editButtonText:hover img.editButton{
 
 .borderradius30 {
 	border-radius: 30px;
+}
+
+.searchpic {
+	max-height: 300px;
+	
 }
 
 .borderradius15 {
@@ -452,17 +467,24 @@ h2.editButtonText:hover img.editButton{
 }
 
 .biotext {
-	margin: 10px;
+	margin: 25px;
 }
 
 .width100 {
 	width: 500px;
 }
 
+.desc {
+	height: 150px;
+}
+
 .black {
 	font-color: black;
 	color: black;
 }
+
+
+
 
 .scrollable-menu {
     height: auto;

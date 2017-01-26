@@ -85,6 +85,7 @@ class TripsController < ApplicationController
 
   def update
     @trip = Trip.find_by(id: params[:id]) 
+
     @trip.name = params[:name]
     @trip.description = params[:description]
     @trip.tagline = params[:tagline] 

@@ -14,8 +14,11 @@ Rails.application.routes.draw do
   get '/trips/:id', to: 'trips#show'
   get 'stops/comments/:id', to: 'comments#destroy'
   delete '/stops/comments/:id', to: 'comments#destroy'
+  get '/trips/comments/:id', to: 'comments#destroy'
+  delete '/trips/comments/:id', to: 'comments#destroy'
   get '/comments/:id', to: 'comments#destroy'
   post "/trips/:id/addtravelers", to: 'user_trips#new'
+
   
 
   # post '/login', to: 'sessions#create'
@@ -35,6 +38,7 @@ Rails.application.routes.draw do
   post '/trips', to: "trips#create"
   get '/users/index', to: "users#index"
   get '/users/:id', to: "users#show"
+  patch "/users/:id", to: "users#update"
   get "/users/unfollow/:id", to: "follows#destroy"
   get "/users/follow/:id", to: "follows#create"
   post "/users/traveling", to: "users#traveling"
@@ -59,6 +63,7 @@ Rails.application.routes.draw do
   get "/stops/:id/archive", to: "stops#archive"
   get "/stops/:id/unarchive", to: "stops#unarchive"
   post "/trips/:id/stop/new", to: "stops#create"
+  patch 'stops/:id', to: "stops#update"
 
 
 

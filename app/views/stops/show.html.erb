@@ -3,20 +3,20 @@
 
 
   <!-- PAGE TITLE -->
-  <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg3.jpg);">
+  <section class="pageTitle" style="background-image:url(/img/pages/page-title-bg8.jpg);">
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
           <div class="titleTable">
             <div class="titleTableInner">
               <div class="pageTitleInfo">
-                <h1><%= @stop.name %></h1>
+                <h1><%=@trip.name%>: <%= @stop.name %></h1>
                 <div class="under-border"></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   </section>
 
@@ -45,8 +45,15 @@
               </div>
               <a class="left carousel-control" href="/#package-carousel" data-slide="prev"><span class="glyphicon glyphicon-menu-left"></span></a>
               <a class="right carousel-control" href="/#package-carousel" data-slide="next"><span class="glyphicon glyphicon-menu-right"></span></a>
+            </div>            
+          </div>
+          <% else %>
+          <div class="col-sm-8 col-xs-12">
+            <div class=" center tripdummyimage">
+              <img src="/img/earth.png">
             </div>
           </div>
+          <% end %>
           <div class="col-sm-4 col-xs-12">
             <aside>
               <div class="weatherInfo">
@@ -65,7 +72,7 @@
           </div><!--  weather column -->
         </div> <!-- row galleryCarousel -->
       </div> <!-- row countryTitle -->
-        <% end %>
+        
 
 
       <div class="row"> <!-- tabs -->
@@ -92,7 +99,7 @@
               </li>
               <% @userstops.each do |usertrip| %>
               <% if usertrip == current_user.id %>
-              <li role="presentation" class="dropdown col-md-1 col-lg-1 col-sm-1">
+              <div role="presentation" class="dropdown col-md-1 col-lg-1 col-sm-1">
                 <button class="btn buttonTransparent dropdown-toggle editbutton" type="button" id="menu1" data-toggle="dropdown">Edit tools
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
@@ -109,7 +116,7 @@
                   <%= link_to 'UnArchive Trip', "/stops/#{@stop.id}/unarchive", role: "tab", method: :patch %></a>
                   <% end %>
                 </ul>
-              </li>
+              <div>
               <% end %>
               <% end %>
               <li class="pull-right">
@@ -124,33 +131,41 @@
 
     <!-- Tab panes -->
       <div class="tab-content">
-
+       
         <div role="tabpanel" class="tab-pane active" id="description">
           <div class="row">
+          <% if @stop.description.length != 0  %>
             <div class="col-sm-8 col-xs-12 showtab whitediv">
               <div class="commonInfo">
                 <h2><%= @stop.tagline %></h2>
                 <p><%= @stop.description %></p>
               </div>
             </div>
+            <% end %>
           </div>
+        
+
           <div class="container"> <!-- comments -->
             <div class="commentsArea">
             <br>
-
               <% @comments.each do |this_comment| %>
                 <div class="media">
-                  <a class="media-left" href="#">
-                    <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
+                  <a class="media-left" href="/users/<%=this_comment.user.id%>">
+                    <% if this_comment.user.images.length > 0 %>
+                    <img class="media-object comment_pic" src="<%=this_comment.user.images.first.url%>" alt="Image"></a>
+                    <% else %>
+                    <img class="media-object comment_pic" src="/img/earth.png" alt="Image">
+                    <% end %>
+                  </a>
                     <div class="media-body blog whitediv">
                       <h4 class="media-heading">
                         <h4 class="media-heading">
                           <%= this_comment.user.first_name %> <%= this_comment.user.last_name %>
                         </h4>
-                        <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span>
-                        </h4>
+<!--                         <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span>
+                        </h4> -->
                         <p> <%= this_comment.comment %> </p>
-                        <button class="btn btn-link" type="button">Reply</button>
+                        <!-- <button class="btn btn-link" type="button">Reply</button> -->
                           <% if current_user.id == this_comment.user.id %>
                             <%= link_to 'Delete', "/stops/comments/#{this_comment.id}", method: :delete %>
                           <% end %>                            
@@ -163,8 +178,12 @@
 
 
                 <div class="media">
-                  <a class="media-left" href="#">
+                  <a class="media-left" href="/users/<%=current_user.id%>">
+                    <% if current_user.images.length > 0 %>
+                    <img class="media-object leave_comment_pic" src="<%=current_user.images.first.url%>" alt="Image">
+                    <% else %>
                     <img class="media-object leave_comment_pic" src="/img/earth.png" alt="Image">
+                    <% end %>
                   </a>
                   <% if current_user %>   
                     <h1>Leave a comment!</h1>
@@ -237,12 +256,20 @@
                       <%= label_tag :name %>
                       <%= text_field_tag :name, nil, class: "form-control", value: @stop.name %>
                       <div>
+                        <%= label_tag :address %>
+                        <%= text_field_tag :address, nil, class: "form-control", value: @stop.address  %>
+                      </div>
+                      <div>
                         <%= label_tag :description %>
                         <%= text_field_tag :description, nil, class: "form-control", value: @stop.description  %>
                       </div>
                       <div>
                         <%= label_tag :tagline %>
                         <%= text_field_tag :tagline, nil, class: "form-control", value: @stop.tagline  %>
+                      </div>
+                      <div>
+                        <%= label_tag :order %>
+                        <%= text_field_tag :order, nil, class: "form-control", value: @stop.order  %>
                       </div>
                       <%= label_tag "Start Date" %>
                       <div class="bookingDrop">
@@ -318,30 +345,37 @@
                   </div>          
                   <br>
                   <br>
-                  <% else %>
-                  <h4> Sorry! No Journal entries have been made yet. </h4>
                   <% end %>
                
-
-                  <% @blogentries.each do |blog| %>
-                  <%#if this_comment.commentable_type == "Trip" %>
-                    <div class="media">
-                      <a class="media-left" href="#">
-                        <img class="media-object comment_pic" src="/img/earth.png" alt="Image"></a>
-                        <div class="media-body blog whitediv">
-                          <h4 class="media-heading">
-                            <%= blog.user.first_name %> <%= blog.user.last_name %></h4>
-                            <h4><span><i class="fa fa-calendar" aria-hidden="true"></i>Mar 20, 2016</span></h4>
-                            <p> <%= blog.entry %> </p>
-                            <button class="btn btn-link" type="button">Reply</button>
-                            <% if current_user.id == blog.user.id %>
-                            <%= link_to 'Delete', "/journals/#{blog.id}", method: :get %>
-                            <% end %>
+                  <%if @blogentries.length > 0 %>
+                    <% @blogentries.each do |blog| %>
+                    <%#if this_comment.commentable_type == "Trip" %>
+                      <div class="media">
+                        <a class="media-left" href="/users/<%=blog.user.id%>">
+                          <% if blog.user.images.length > 0 %>
+                          <img class="media-object comment_pic" src="<%=blog.user.images.first.url%>" alt="Image">
+                          <% else %>
+                          <img class="media-object comment_pic" src="/img/earth.png" alt="Image">
+                          <% end %>
+                          </a>
+                          <div class="media-body blog whitediv">
+                            <h4 class="media-heading">
+                              <%= blog.user.first_name %> <%= blog.user.last_name %></h4>
+<!--                               <h4><span><i class="fa fa-calendar" aria-hidden="true"></i></span></h4> -->
+                              <p> <%= blog.entry %> </p>
+                             <!--  <button class="btn btn-link" type="button">Reply</button> -->
+                              <% if current_user.id == blog.user.id %>
+                              <%= link_to 'Delete', "/journals/#{blog.id}", method: :get %>
+                              <% end %>
+                              <br>
+                              <br>
+                          </div> <!-- media-body blog -->
                             <br>
-                            <br>
-                        </div> <!-- media-body blog -->
-                          <br>
-                    </div> <!-- media blog entry -->
+                      </div> <!-- media blog entry --> 
+                    
+                    <% end %> <!-- each loop -->
+                    <% else %>
+                    <h4> Sorry! No Journal entries have been made yet. </h4>
                   <% end %>
                   </div> <!-- comments area -->
                 </div> <!-- container -->
@@ -379,8 +413,8 @@
                     <div class="overlay">
                       <a class="fancybox-pop" rel="portfolio-1" href="<%=image.url%>">
                         <span class="overlayInfo overflow_hidden">
-                          <p><%=image.description%></p>
-                          <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
+                          <p><span><%=image.description%></span></p>
+                          <!-- <p><i class="fa fa-calendar" aria-hidden="true"></i></p> -->
                         </span>
                       </a>
                     </div>

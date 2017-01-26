@@ -15,6 +15,8 @@ class ImagesController < ApplicationController
       redirect_to "/stops/#{params[:stop_id]}"
     elsif params[:trip_id]
       redirect_to "/trips/#{params[:trip_id]}"
+    elsif params[:user_id]
+      redirect_to "users/#{params[:user_id]}"
     end
   end
 

@@ -59,6 +59,21 @@ class StopsController < ApplicationController
   redirect_to "/stops/#{@stop.id}"
   end
   
+  def edit
+    @stop = Stop.find_by(id: params[:id])
+  end
+
+  def update
+    @stop = Stop.find_by(id: params[:id]) 
+    @stop.name = params[:name]
+    @stop.order = params[:order]
+    @stop.address = params[:address]
+    @stop.description = params[:description]
+    @stop.tagline = params[:tagline] 
+    @stop.save 
+    redirect_to "/stops/#{@stop.id}"
+  end
+
   # private
   # def place_params
   #   params.require(:place).permit(:title, :address, :visited_by)

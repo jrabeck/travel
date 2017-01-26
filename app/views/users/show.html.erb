@@ -53,9 +53,104 @@
 		      	<% end %>
 		      </div>
 	      </div>
-	      <br>
-	      <br>
-	     
+	      <%if @user.id == current_user.id%>
+       
+	        <ul class="centered" >
+	          <li  class="dropdown col-md-12 col-lg-12 col-sm-12 centered">
+			        <button class="btn buttonTransparent dropdown-toggle editbutton " type="button" id="menu1" data-toggle="dropdown">Edit tools<span class="caret"></span>
+			        </button> 
+			   		  <ul class="dropdown-menu col-md-12 col-lg-12 col-sm-12 centered useredit" role="menu" >
+		            <li ><a role="menuitem" tabindex="-1" href="#add-pic" aria-controls="add-pic" role="tab" data-toggle="tab">Add a Picture</a></li>
+		            <li role="presentation"><a role="menuitem" tabindex="-1" href="#edit_user" aria-controls="edit_user" role="tab" data-toggle="tab">Edit info</a></li>
+		            <li role="presentation"><a role="menuitem" tabindex="-1"  aria-controls="archived" role="tab" data-toggle="tab"> 
+		            <% if @user.archived == false || @user.archived == nil %>
+		            <%= link_to 'Delete user', "/users/#{@user.id}/archive", role: "tab", method: :patch %></a>
+		            <% end %>
+		            <% if @user.archived == true %>
+		            <%= link_to 'UnArchive Trip', "/users/#{@user.id}/unarchive", role: "tab", method: :patch %></a>
+		            <% end %>
+		            </li>
+		          </ul>
+	          </li>
+	   		  </ul>
+   		  
+   		  <% end %>
+			<div class="tab-content">
+   		  <div role="tabpanel" class="tab-pane showtab" id="add-pic">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12 showtab whitediv">
+              <div class="commonInfo">
+                <div class="bookingForm">
+                <br>
+                  <div class="form-group col-sm-12 col-xs-12">
+                  <%= form_tag "/pictures/add", method: :post do  %>
+                  <!-- <form action="/stops" method="POST" role="form" class="form"> -->
+                  <div class="row">
+                    <div class="form-group col-sm-12 col-xs-12">
+                      <%= label_tag "add picture url" %>
+                      <%= text_field_tag :url, nil, class: "form-control" %>
+                      <%= label_tag "tagline" %>
+                      <%= text_field_tag :tagline, nil, class: "form-control" %>
+                      <%= hidden_field_tag "user_id", @user.id %>
+                    </div> <!-- col -->
+                  </div> <!-- row -->
+
+                    <%= submit_tag "Submit", class: "btn buttonTransparent editbutton" %>
+                    <br>
+                    <br>
+                </div><!--  form -->
+                <% end %>
+                </div>
+              </div> <!-- common info -->
+            </div><!--  col -->
+          </div> <!-- row -->
+        </div> <!-- edit trip panel -->
+
+        <div role="tabpanel" class="tab-pane showtab" id="edit_user">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12 showtab whitediv">
+              <div class="commonInfo">
+                <div class="bookingForm">
+                <br>
+                  <div class="form-group col-sm-12 col-xs-12">
+                  <%= form_tag "/users/#{@user.id}", method: :patch do  %>
+                  <!-- <form action="/stops" method="POST" role="form" class="form"> -->
+                  <div class="row">
+                    <div class="form-group col-sm-12 col-xs-12">
+                      <%= label_tag "first name" %>
+                      <%= text_field_tag :first_name, nil, class: "form-control", value: @user.first_name %>
+                      <div>
+                        <%= label_tag "last name" %>
+                        <%= text_field_tag :last_name, nil, class: "form-control", value: @user.last_name  %>
+                      </div>
+                      <div>
+                        <%= label_tag :bio %>
+                        <%= text_field_tag :bio, nil, class: "form-control", value: @user.bio  %>
+                      </div>
+                      <div>
+                        <%= label_tag :email %>
+                        <%= text_field_tag :email, nil, class: "form-control", value: @user.email  %>
+                      </div>
+                    </div> <!-- col -->
+                  </div> <!-- row -->
+
+                    <%= submit_tag "Submit", class: "btn buttonTransparent editbutton" %>
+                    <br>
+                    <br>
+                </div><!--  form -->
+                <% end %>
+                </div>
+              </div> <!-- common info -->
+            </div><!--  col -->
+          </div> <!-- row -->
+        </div> <!-- edit trip panel -->
+
+       </div>
+
+
+
+    	  <br>
+				<br>
         <div class="row">
           <div class="col-xs-12">
             <div class="filter-container isotopeFilters">
@@ -87,8 +182,9 @@
 		                <div class="overlay">
 		                  <a class="fancybox-pop" rel="portfolio-1" href="/trips/<%=trip.id%>">
 		                    <span class="overlayInfo">
-		                      <h5>from <span>$1000</span></h5>
-		                      <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
+		                    	<% if trip.start_date%>
+		                      <p><i class="fa fa-calendar" aria-hidden="true"></i><%=trip.start_date%></p>
+		                      <%end%>
 		                    </span>
 		                  </a>
 		                </div>
@@ -113,7 +209,7 @@
 		                  <a class="fancybox-pop" rel="portfolio-1" href="/stops/<%=stop.id%>">
 		                    <span class="overlayInfo">
 		                      <h5><%=stop.tagline%> </h5> <!-- anything in span tags here will be orange -->
-		                      <p><i class="fa fa-calendar" aria-hidden="true"></i>27 jan, 2016</p>
+		                      <!-- <p><i class="fa fa-calendar" aria-hidden="true"></i></p> -->
 		                    </span>
 		                  </a>
 		                </div>

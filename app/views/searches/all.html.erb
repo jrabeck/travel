@@ -138,9 +138,9 @@
                 <% end %>    <!-- if not archived -->
                 <%end%> <!-- each trip -->
 
-                <div class="centered">
+<!--                 <div class="centered">
                   <a href="/users/archive" class="btn buttonTransparent"> Archive </a>
-                </div>
+                </div> -->
               </div> <!-- tab-pane active -->
 
               <div role="tabpanel" class="tab-pane" id="popular">
@@ -167,6 +167,9 @@
                 <br/>
                   <div ng-repeat="user in users">
                     <a href="/users/{{ user.id}}"> {{ user.first_name }} {{ user.last_name }} </a>
+                  </div>
+                  <div ng-repeat="users_last in users_lasts">
+                    <a href="/users/{{ user_last.id}}"> {{ user_last.first_name }} {{ user_last.last_name }} </a>
                   </div>
                 </div> <!-- ng-controllers -->
               </div> <!-- tab-pane -->   
@@ -211,6 +214,42 @@
               </div> <!-- media packagesList -->
 
 	            
+            <% end %>
+
+            <% @users_last.each do |user| %>
+
+            <div class="media packagesList borderradius30">
+                <a class="media-left feedpic" href="/users/<%=user.id%>">
+
+                <% if user.images.length > 0 %>
+                  <img class="media-object borderradius30" src="<%=user.images.first.url%>" alt="Image">
+                <% else %>
+                  <img class="earth feedpicearth media-object" src="/img/earth.png" alt="blog-image">
+                <% end %>
+                </a>
+
+                <div class="media-body">
+                  <div class="">
+                    <h4 class="media-heading feedhead"><a href="/users/<%=user.id%>"> <%=user.first_name%> <%=user.last_name%>
+                    <div class="countryRating">   
+                      <br>
+                    </div> <!-- country rating -->
+                    <% if user.bio %>
+                    <p><%= user.bio.first(275) %></p>
+                    <% end %>
+                    <p class="black"> Trips <%= user.first_name %> has been on:</p>
+                    <% if user.trips.length > 0 %>
+                    <p class="black">
+                     <% user.trips.each_with_index do |trip, index| %>
+                      <a href="/trips/<%=trip.id%>"> <%= trip.name %> </a> 
+                      <%= "," unless index == user.trips.length - 1 %>  
+                    <% end %> </p>
+                    <% end %>
+                  </div> <!-- bodyleft -->
+                </div> <!-- media-body-->
+              </div> <!-- media packagesList -->
+
+              
             <% end %>
 
             <% @trips.each do |trip| %>      
